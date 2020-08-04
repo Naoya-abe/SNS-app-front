@@ -1,6 +1,7 @@
 import React from 'react';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/styles';
+import Navbar from './Navbar';
 
 const theme = createMuiTheme({
   palette: {
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
       <p>App</p>
+      <Navbar />
     </MuiThemeProvider>
   );
 };

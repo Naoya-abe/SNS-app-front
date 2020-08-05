@@ -69,19 +69,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// useReduserを使ってSignin.jsのコンポーネントを管理する
+// useReduserを使ってSignin.jsの状態を管理する
 const initialState = {
   isLoading: false,
-  // isSigninView: true,
   error: '',
   credentialsSignin: {
     username: '',
     password: '',
   },
-  // credentialsSignup: {
-  //   username: '',
-  //   password: '',
-  // },
 };
 
 // stateを変更するreducerを書く
@@ -107,19 +102,43 @@ const signinReducer = (state, action) => {
         ...state,
         [action.inputName]: action.payload,
       };
-    // case TOGGLE_MODE:
-    //   return {
-    //     ...state,
-    //     isSigninView: !state.isSigninView,
-    //   };
     default:
       return state;
   }
 };
 
-const Signin = () => {
+const Signin = (props) => {
   const classes = useStyles();
-  const [state, dispatch] = useReducer(initialState);
+  const [state, dispatch] = useReducer(signinReducer, initialState);
+
+  const inputChanged = (event) => {
+    const credentials = state.credentialsSignin;
+    credentials[event.target.name] = event.target.value;
+    dispatch({
+      type: INPUT_EDIT,
+      inputName: 'state.credentialsSignin',
+      payload: credentials,
+    });
+  };
+
+  const signin = async (event) => {
+    event.preventDefault();
+    try {
+      dispatch({ type: START_FETCH });
+      console.log(state.credentialsSignin);
+      // const res = await axios.post(
+      //   'http://localhost:8080/authen/',
+      //   state.credentialsSignin,
+      //   { headers: { 'Content-Type': 'application/json' } }
+      // );
+      // props.cookies.set('current-token', res.data.token);
+      // window.location.href('/');
+      dispatch({ type: FETCH_SUCCESS });
+    } catch (err) {
+      dispatch({ type: ERROR_CATCHED });
+    }
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -130,7 +149,7 @@ const Signin = () => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form className={classes.form} noValidate onSubmit={signin}>
           <TextField
             variant='outlined'
             margin='normal'
@@ -138,9 +157,10 @@ const Signin = () => {
             fullWidth
             id='email'
             label='Email Address'
-            name='email'
+            name='username'
             autoComplete='email'
             autoFocus
+            onChange={inputChanged}
           />
           <TextField
             variant='outlined'
@@ -152,7 +172,9 @@ const Signin = () => {
             type='password'
             id='password'
             autoComplete='current-password'
+            onChange={inputChanged}
           />
+          <span className={classes.spanError}>{state.error}</span>
           <Button
             type='submit'
             fullWidth
@@ -160,7 +182,11 @@ const Signin = () => {
             color='primary'
             className={classes.submit}
           >
-            Sign In
+            {state.isLoading ? (
+              <CircularProgress size={25} color='secondary' />
+            ) : (
+              'Sign In'
+            )}
           </Button>
           <Grid container>
             <Grid item>
@@ -178,4 +204,4 @@ const Signin = () => {
   );
 };
 
-export default Signin;
+export default withCookies(Signin);

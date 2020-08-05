@@ -69,9 +69,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// useReduserを使ってSignup.jsの状態を管理する
+const initialState = {
+  isLoading: false,
+  error: '',
+  credentialsSignup: {
+    displayName: '',
+    username: '',
+    password: '',
+  },
+};
+
+// stateを変更するreducerを書く
+const signupReducer = (state, action) => {
+  switch (action.type) {
+    case START_FETCH:
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+      };
+    case ERROR_CATCHED:
+      return {
+        ...state,
+        error: 'Email or password is not correct',
+      };
+    case INPUT_EDIT:
+      return {
+        ...state,
+        [action.inputName]: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+
 const Signup = () => {
   const classes = useStyles();
-  // const [state, dispatch] = useReducer(initialState);
+  const [state, dispatch] = useReducer(signupReducer, initialState);
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />

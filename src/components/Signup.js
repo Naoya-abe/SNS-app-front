@@ -19,8 +19,9 @@ import {
   FETCH_SUCCESS,
   ERROR_CATCHED,
   INPUT_EDIT,
-  // TOGGLE_MODE,
 } from './actionTypes';
+import history from '../history';
+import '../styles/components/Signup.scss';
 
 const Copyright = () => {
   return (
@@ -74,8 +75,8 @@ const initialState = {
   isLoading: false,
   error: '',
   credentialsSignup: {
-    displayName: '',
-    username: '',
+    // displayName: '',
+    email: '',
     password: '',
   },
 };
@@ -96,7 +97,8 @@ const signupReducer = (state, action) => {
     case ERROR_CATCHED:
       return {
         ...state,
-        error: 'Email or password is not correct',
+        isLoading: false,
+        error: 'Bad Request',
       };
     case INPUT_EDIT:
       return {
@@ -111,6 +113,36 @@ const signupReducer = (state, action) => {
 const Signup = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(signupReducer, initialState);
+
+  const inputChanged = (event) => {
+    const credentials = state.credentialsSignup;
+    credentials[event.target.name] = event.target.value;
+    dispatch({
+      type: INPUT_EDIT,
+      inputName: 'state.credentialsSignup',
+      payload: credentials,
+    });
+    console.log(state);
+  };
+
+  const signup = async (event) => {
+    event.preventDefault();
+    try {
+      dispatch({ type: START_FETCH });
+      console.log(state.credentialsSignup);
+      const res = await axios.post(
+        'http://localhost:8080/api/user/signup/',
+        state.credentialsSignup,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      history.push('/signin');
+      dispatch({ type: FETCH_SUCCESS });
+    } catch (err) {
+      dispatch({ type: ERROR_CATCHED });
+      console.log(err);
+    }
+  };
+
   return (
     <Container component='main' maxWidth='xs'>
       <CssBaseline />
@@ -121,8 +153,8 @@ const Signup = () => {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField
+        <form className={classes.form} noValidate onSubmit={signup}>
+          {/* <TextField
             variant='outlined'
             margin='normal'
             required
@@ -132,7 +164,7 @@ const Signup = () => {
             name='displayName'
             autoComplete='displayName'
             autoFocus
-          />
+          /> */}
           <TextField
             variant='outlined'
             margin='normal'
@@ -142,6 +174,7 @@ const Signup = () => {
             label='Email Address'
             name='email'
             autoComplete='email'
+            onChange={inputChanged}
           />
           <TextField
             variant='outlined'
@@ -153,6 +186,7 @@ const Signup = () => {
             type='password'
             id='password'
             autoComplete='current-password'
+            onChange={inputChanged}
           />
           <Button
             type='submit'
@@ -163,7 +197,7 @@ const Signup = () => {
           >
             Sign Up
           </Button>
-          <Grid container>
+          <Grid container className='to-signin'>
             <Grid item>
               <RouterLink to='/signin'>{'Have an account? Sign In'}</RouterLink>
             </Grid>

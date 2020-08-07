@@ -19,8 +19,8 @@ import {
   FETCH_SUCCESS,
   ERROR_CATCHED,
   INPUT_EDIT,
-  // TOGGLE_MODE,
 } from './actionTypes';
+import '../styles/components/Signin.scss';
 
 const Copyright = () => {
   return (
@@ -95,6 +95,7 @@ const signinReducer = (state, action) => {
     case ERROR_CATCHED:
       return {
         ...state,
+        isLoading: false,
         error: 'Email or password is not correct',
       };
     case INPUT_EDIT:
@@ -126,16 +127,17 @@ const Signin = (props) => {
     try {
       dispatch({ type: START_FETCH });
       console.log(state.credentialsSignin);
-      // const res = await axios.post(
-      //   'http://localhost:8080/authen/',
-      //   state.credentialsSignin,
-      //   { headers: { 'Content-Type': 'application/json' } }
-      // );
-      // props.cookies.set('current-token', res.data.token);
-      // window.location.href('/');
+      const res = await axios.post(
+        'http://localhost:8080/authen/',
+        state.credentialsSignin,
+        { headers: { 'Content-Type': 'application/json' } }
+      );
+      props.cookies.set('current-token', res.data.token);
+      window.location.href('/');
       dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
       dispatch({ type: ERROR_CATCHED });
+      console.log(err);
     }
   };
 
@@ -188,7 +190,7 @@ const Signin = (props) => {
               'Sign In'
             )}
           </Button>
-          <Grid container>
+          <Grid container className='to-signup'>
             <Grid item>
               <RouterLink to='/signup'>
                 {"Don't have an account? Sign Up"}

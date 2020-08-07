@@ -1,20 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-import { Route, BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { CookiesProvider } from 'react-cookie';
-import Signin from './components/Signin';
 import Routes from './routes';
+import history from './history';
 
 const routing = (
-  <BrowserRouter>
+  <Router history={history}>
     <CookiesProvider>
       <Routes />
-      {/* <Route exact path='/' component={Signin} />
-      <Route exact path='/' component={Signin} />
-      <Route exact path='/home' component={App} /> */}
     </CookiesProvider>
-  </BrowserRouter>
+  </Router>
 );
 
 ReactDOM.render(routing, document.querySelector('#root'));

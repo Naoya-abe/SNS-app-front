@@ -1,5 +1,4 @@
 import React, { useReducer } from 'react';
-import { withCookies } from 'react-cookie';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
 import Avatar from '@material-ui/core/Avatar';
@@ -129,8 +128,7 @@ const Signup = () => {
     event.preventDefault();
     try {
       dispatch({ type: START_FETCH });
-      console.log(state.credentialsSignup);
-      const res = await axios.post(
+      await axios.post(
         'http://localhost:8080/api/user/signup/',
         state.credentialsSignup,
         { headers: { 'Content-Type': 'application/json' } }
@@ -188,6 +186,7 @@ const Signup = () => {
             autoComplete='current-password'
             onChange={inputChanged}
           />
+          <span className={classes.spanError}>{state.error}</span>
           <Button
             type='submit'
             fullWidth
@@ -195,7 +194,11 @@ const Signup = () => {
             color='primary'
             className={classes.submit}
           >
-            Sign Up
+            {state.isLoading ? (
+              <CircularProgress size={25} color='secondary' />
+            ) : (
+              'Sign Up'
+            )}
           </Button>
           <Grid container className='to-signin'>
             <Grid item>

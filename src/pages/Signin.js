@@ -19,7 +19,7 @@ import {
   FETCH_SUCCESS,
   ERROR_CATCHED,
   INPUT_EDIT,
-} from './actionTypes';
+} from '../components/actionTypes';
 import '../styles/components/Signin.scss';
 
 const Copyright = () => {

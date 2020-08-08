@@ -21,11 +21,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   drawer: {
-    width: drawerWidth,
+    width: 100,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: drawerWidth,
+    width: 250,
   },
   // necessary for content to be below app bar
   toolbar: theme.mixins.toolbar,
@@ -57,7 +57,7 @@ const Navbar = (props) => {
     }
   };
   return (
-    <div>
+    <React.Fragment>
       <CssBaseline />
       <Drawer
         className={classes.drawer}
@@ -84,7 +84,7 @@ const Navbar = (props) => {
           )}
         </List>
       </Drawer>
-    </div>
+    </React.Fragment>
   );
 };
 

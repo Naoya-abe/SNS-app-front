@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Signin from '../../components/Signin';
-import Signup from '../../components/Signup';
+import Signin from '../../pages/Signin';
+import Signup from '../../pages/Signup';
 
 const BeforeRoutes = () => {
   return (

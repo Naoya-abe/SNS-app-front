@@ -18,7 +18,7 @@ import {
   FETCH_SUCCESS,
   ERROR_CATCHED,
   INPUT_EDIT,
-} from './actionTypes';
+} from '../components/actionTypes';
 import history from '../history';
 import '../styles/components/Signup.scss';
 

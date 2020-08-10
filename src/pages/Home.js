@@ -9,7 +9,7 @@ import '../styles/components/Home.scss';
 const Home = () => {
   return (
     <div className='home'>
-      HOME
+      <h3>HOME</h3>
       <Divider />
       <PostCreate />
       <Divider className='home-divider' />

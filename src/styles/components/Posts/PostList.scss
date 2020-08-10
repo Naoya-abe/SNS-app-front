@@ -1,0 +1,10 @@
+.post-list{
+    height:80vh;
+    .scroll-list {
+        width:100%;
+        margin: auto;
+        max-height: 100%;
+        overflow: hidden;
+        overflow-y: auto;
+    }
+}

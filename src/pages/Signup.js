@@ -173,6 +173,7 @@ const Signup = () => {
             name='email'
             autoComplete='email'
             onChange={inputChanged}
+            autoFocus
           />
           <TextField
             variant='outlined'

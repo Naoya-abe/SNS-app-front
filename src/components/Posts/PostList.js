@@ -1,19 +1,19 @@
 import React from 'react';
 import { Divider } from '@material-ui/core';
-import sampleData from './sampleData.json';
 import PostDetail from './PostDetail';
 
 import '../../styles/components/Posts/PostList.scss';
 
-const PostList = () => {
+const PostList = ({ posts }) => {
   return (
     <div className='post-list'>
       <div className='scroll-list'>
-        {sampleData.map((datum) => {
+        {posts.map((datum) => {
           return (
-            <React.Fragment key={datum.avatar}>
+            <React.Fragment key={datum.id}>
               <PostDetail
-                displayName={datum.displayName}
+                // displayName={datum.displayName}
+                displayName='User Name'
                 avatar={datum.avatar}
                 content={datum.content}
               />

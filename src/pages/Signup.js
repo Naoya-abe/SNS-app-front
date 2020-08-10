@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { Link as RouterLink } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -17,7 +18,6 @@ import {
   START_FETCH,
   FETCH_SUCCESS,
   ERROR_CATCHED,
-  INPUT_EDIT,
 } from '../components/actionTypes';
 import history from '../history';
 import '../styles/components/Signup.scss';
@@ -73,11 +73,6 @@ const useStyles = makeStyles((theme) => ({
 const initialState = {
   isLoading: false,
   error: '',
-  credentialsSignup: {
-    // displayName: '',
-    email: '',
-    password: '',
-  },
 };
 
 // stateを変更するreducerを書く
@@ -99,11 +94,6 @@ const signupReducer = (state, action) => {
         isLoading: false,
         error: 'Bad Request',
       };
-    case INPUT_EDIT:
-      return {
-        ...state,
-        [action.inputName]: action.payload,
-      };
     default:
       return state;
   }
@@ -112,33 +102,33 @@ const signupReducer = (state, action) => {
 const Signup = () => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(signupReducer, initialState);
+  const { register, handleSubmit } = useForm();
 
-  const inputChanged = (event) => {
-    const credentials = state.credentialsSignup;
-    credentials[event.target.name] = event.target.value;
-    dispatch({
-      type: INPUT_EDIT,
-      inputName: 'state.credentialsSignup',
-      payload: credentials,
-    });
-    console.log(state);
-  };
-
-  const signup = async (event) => {
-    event.preventDefault();
+  const signup = async (data) => {
+    const profile = {
+      displayName: data.displayName,
+    };
+    const params = {
+      email: data.email,
+      password: data.password,
+      profile: profile,
+    };
     try {
-      dispatch({ type: START_FETCH });
-      await axios.post(
-        'http://localhost:8080/api/user/signup/',
-        state.credentialsSignup,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
-      history.push('/signin');
-      dispatch({ type: FETCH_SUCCESS });
+      await axios.post('http://localhost:8080/api/user/signup/', params, {
+        headers: { 'Content-Type': 'application/json' },
+      });
     } catch (err) {
       dispatch({ type: ERROR_CATCHED });
       console.log(err);
     }
+  };
+
+  const handleSignup = (data) => {
+    dispatch({ type: START_FETCH });
+    signup(data);
+    // TODO:memoryErrorの修正
+    history.push('/signin');
+    dispatch({ type: FETCH_SUCCESS });
   };
 
   return (
@@ -151,8 +141,12 @@ const Signup = () => {
         <Typography component='h1' variant='h5'>
           Sign up
         </Typography>
-        <form className={classes.form} noValidate onSubmit={signup}>
-          {/* <TextField
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(handleSignup)}
+        >
+          <TextField
             variant='outlined'
             margin='normal'
             required
@@ -161,8 +155,15 @@ const Signup = () => {
             label='User Name'
             name='displayName'
             autoComplete='displayName'
+            inputRef={register({
+              required: { value: true, message: 'Please enter displayName.' },
+              maxLength: {
+                value: 20,
+                message: 'Please enter within 20 letters',
+              },
+            })}
             autoFocus
-          /> */}
+          />
           <TextField
             variant='outlined'
             margin='normal'
@@ -172,8 +173,16 @@ const Signup = () => {
             label='Email Address'
             name='email'
             autoComplete='email'
-            onChange={inputChanged}
-            autoFocus
+            inputRef={register({
+              required: {
+                value: true,
+                message: 'Please enter your email address',
+              },
+              pattern: {
+                value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                message: 'Please enter email address in the correct format',
+              },
+            })}
           />
           <TextField
             variant='outlined'
@@ -185,7 +194,17 @@ const Signup = () => {
             type='password'
             id='password'
             autoComplete='current-password'
-            onChange={inputChanged}
+            inputRef={register({
+              required: { value: true, message: 'Please enter your password' },
+              minLength: {
+                value: 4,
+                message: 'Your password must be at least 4 characters',
+              },
+              maxLength: {
+                value: 20,
+                message: 'Please enter within 20 letters',
+              },
+            })}
           />
           <span className={classes.spanError}>{state.error}</span>
           <Button

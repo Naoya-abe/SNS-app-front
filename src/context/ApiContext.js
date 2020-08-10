@@ -29,7 +29,7 @@ const ApiContextProvider = (props) => {
       const res = await axios.post('http://localhost:8080/api/post/', params, {
         headers: { Authorization: `Token ${token}` },
       });
-      console.log(res);
+      setPosts([...posts, res.data]);
     } catch (err) {
       console.log(err);
     }
@@ -41,13 +41,14 @@ const ApiContextProvider = (props) => {
         headers: { Authorization: `Token ${token}` },
       });
       console.log(res);
+      setPosts(res.data);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <ApiContext.Provider value={{ profile, createPost, getPosts }}>
+    <ApiContext.Provider value={{ profile, createPost, posts, getPosts }}>
       {props.children}
     </ApiContext.Provider>
   );

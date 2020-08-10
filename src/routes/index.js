@@ -23,7 +23,6 @@ const Routes = (props) => {
   return (
     <MuiThemeProvider theme={theme}>
       {props.cookies.get('current-token') ? <AfterRoutes /> : <BeforeRoutes />}
-      {/* {props.cookies.get('current-token') ? <BeforeRoutes /> : <AfterRoutes />} */}
     </MuiThemeProvider>
   );
 };

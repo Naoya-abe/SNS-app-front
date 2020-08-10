@@ -1,20 +1,23 @@
-.create-post{
+.create-post {
+  display: flex;
+  height: 18vh;
+
+  form {
+    width: 100%;
     display: flex;
     justify-content: space-between;
-    height: 18vh;
-
     textarea {
-        margin-top: 8px;
-        height: 90%;
-        width: 70%;
+      margin-top: 8px;
+      height: 90%;
+      width: 90%;
     }
-    .button-container{
-        display: flex;
-        align-items: flex-end;
-        button {
-            margin-bottom: 5px;
-            height: 30px;
-        } 
+    .button-container {
+      display: flex;
+      align-items: flex-end;
+      button {
+        margin-bottom: 5px;
+        height: 30px;
+      }
     }
-    
+  }
 }

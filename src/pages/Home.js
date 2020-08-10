@@ -10,16 +10,18 @@ const Home = () => {
   const { profile, posts, createPost, getPosts } = useContext(ApiContext);
 
   useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+    if (posts.length === 0) {
+      getPosts();
+    }
+  }, [getPosts, posts]);
 
   return (
     <div className='home'>
       <h3>HOME</h3>
       <Divider />
-      <PostCreate />
+      <PostCreate profile={profile} createPost={createPost} />
       <Divider className='home-divider' />
-      <PostList />
+      <PostList posts={posts} />
     </div>
   );
 };

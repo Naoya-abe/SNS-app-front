@@ -2,6 +2,7 @@ import React, { useReducer } from 'react';
 import { withCookies } from 'react-cookie';
 import { Link as RouterLink } from 'react-router-dom';
 import axios from 'axios';
+import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -73,10 +74,6 @@ const useStyles = makeStyles((theme) => ({
 const initialState = {
   isLoading: false,
   error: '',
-  credentialsSignin: {
-    username: '',
-    password: '',
-  },
 };
 
 // stateを変更するreducerを書く
@@ -98,11 +95,6 @@ const signinReducer = (state, action) => {
         isLoading: false,
         error: 'Email or password is not correct',
       };
-    case INPUT_EDIT:
-      return {
-        ...state,
-        [action.inputName]: action.payload,
-      };
     default:
       return state;
   }
@@ -111,28 +103,16 @@ const signinReducer = (state, action) => {
 const Signin = (props) => {
   const classes = useStyles();
   const [state, dispatch] = useReducer(signinReducer, initialState);
+  const { register, handleSubmit } = useForm();
 
-  const inputChanged = (event) => {
-    const credentials = state.credentialsSignin;
-    credentials[event.target.name] = event.target.value;
-    dispatch({
-      type: INPUT_EDIT,
-      inputName: 'state.credentialsSignin',
-      payload: credentials,
-    });
-  };
-
-  const signin = async (event) => {
-    event.preventDefault();
+  const signin = async (data) => {
     try {
       dispatch({ type: START_FETCH });
-      console.log(state.credentialsSignin);
-      const res = await axios.post(
-        'http://localhost:8080/authen/',
-        state.credentialsSignin,
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+      const res = await axios.post('http://localhost:8080/authen/', data, {
+        headers: { 'Content-Type': 'application/json' },
+      });
       props.cookies.set('current-token', res.data.token);
+      // TODO: memory error
       window.location.href('/');
       dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
@@ -151,7 +131,11 @@ const Signin = (props) => {
         <Typography component='h1' variant='h5'>
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={signin}>
+        <form
+          className={classes.form}
+          noValidate
+          onSubmit={handleSubmit(signin)}
+        >
           <TextField
             variant='outlined'
             margin='normal'
@@ -162,7 +146,16 @@ const Signin = (props) => {
             name='username'
             autoComplete='email'
             autoFocus
-            onChange={inputChanged}
+            inputRef={register({
+              required: {
+                value: true,
+                message: 'Please enter your email address',
+              },
+              pattern: {
+                value: /^[A-Za-z0-9]{1}[A-Za-z0-9_.-]*@{1}[A-Za-z0-9_.-]{1,}\.[A-Za-z0-9]{1,}$/,
+                message: 'Please enter email address in the correct format',
+              },
+            })}
           />
           <TextField
             variant='outlined'
@@ -174,7 +167,17 @@ const Signin = (props) => {
             type='password'
             id='password'
             autoComplete='current-password'
-            onChange={inputChanged}
+            inputRef={register({
+              required: { value: true, message: 'Please enter your password' },
+              minLength: {
+                value: 4,
+                message: 'Your password must be at least 4 characters',
+              },
+              maxLength: {
+                value: 20,
+                message: 'Please enter within 20 letters',
+              },
+            })}
           />
           <span className={classes.spanError}>{state.error}</span>
           <Button

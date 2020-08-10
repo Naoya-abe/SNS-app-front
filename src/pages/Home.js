@@ -10,6 +10,7 @@ const Home = () => {
   const { profile, posts, createPost, getPosts } = useContext(ApiContext);
 
   useEffect(() => {
+    // 無限ループの修正
     if (posts.length === 0) {
       getPosts();
     }

@@ -12,9 +12,8 @@ const PostList = ({ posts }) => {
           return (
             <React.Fragment key={datum.id}>
               <PostDetail
-                // displayName={datum.displayName}
-                displayName='User Name'
-                avatar={datum.avatar}
+                displayName={datum.postFrom.displayName}
+                avatar={datum.postFrom.avatar}
                 content={datum.content}
               />
               <Divider />

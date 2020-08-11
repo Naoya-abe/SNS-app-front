@@ -1,6 +1,6 @@
 import React from 'react';
 import { Divider } from '@material-ui/core';
-import PostDetail from './PostDetail';
+import PostItem from './PostItem';
 
 import '../../styles/components/Posts/PostList.scss';
 
@@ -11,7 +11,7 @@ const PostList = ({ posts }) => {
         {posts.map((datum) => {
           return (
             <React.Fragment key={datum.id}>
-              <PostDetail
+              <PostItem
                 displayName={datum.postFrom.displayName}
                 avatar={datum.postFrom.avatar}
                 content={datum.content}

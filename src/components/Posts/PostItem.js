@@ -1,10 +1,9 @@
 import React from 'react';
-import ImageAvatar from '../ImageAvatar';
 import UserHeader from '../UserHeader';
 
-import '../../styles/components/Posts/PostDetail.scss';
+import '../../styles/components/Posts/PostItem.scss';
 
-const PostDetail = (props) => {
+const PostItem = (props) => {
   const { displayName, avatar, content } = props;
   return (
     <div>
@@ -14,4 +13,4 @@ const PostDetail = (props) => {
   );
 };
 
-export default PostDetail;
+export default PostItem;

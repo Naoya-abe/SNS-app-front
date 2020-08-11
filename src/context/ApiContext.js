@@ -16,7 +16,7 @@ const ApiContextProvider = (props) => {
           'http://localhost:8080/api/user/myprofile/',
           { headers: { Authorization: `Token ${token}` } }
         );
-        console.log(res);
+        setProfile(res.data);
       } catch (err) {
         console.log(err);
       }
@@ -25,6 +25,7 @@ const ApiContextProvider = (props) => {
   }, [token, profile.id]);
 
   const createPost = async (params) => {
+    console.log(params);
     try {
       const res = await axios.post('http://localhost:8080/api/post/', params, {
         headers: { Authorization: `Token ${token}` },

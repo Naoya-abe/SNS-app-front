@@ -8,7 +8,8 @@ import '../../styles/components/Posts/PostCreate.scss';
 const PostCreate = ({ profile, createPost }) => {
   const { register, handleSubmit } = useForm();
   const handleCreate = (data, e) => {
-    createPost(data);
+    const params = { ...data, postFromId: profile[0].id };
+    createPost(params);
     e.target.reset();
   };
   return (

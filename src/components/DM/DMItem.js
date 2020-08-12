@@ -1,7 +1,7 @@
 import React from 'react';
 import UserHeader from '../UserHeader';
 
-const DMDisplay = (props) => {
+const DMItem = (props) => {
   const { displayName, avatar, message } = props;
   return (
     <div>
@@ -11,4 +11,4 @@ const DMDisplay = (props) => {
   );
 };
 
-export default DMDisplay;
+export default DMItem;

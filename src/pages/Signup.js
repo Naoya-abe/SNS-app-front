@@ -105,16 +105,13 @@ const Signup = () => {
   const { register, handleSubmit } = useForm();
 
   const signup = async (data) => {
-    const profile = {
-      displayName: data.displayName,
-    };
     const params = {
       email: data.email,
       password: data.password,
-      profile: profile,
+      displayName: data.displayName,
     };
     try {
-      await axios.post('http://localhost:8080/api/user/signup/', params, {
+      await axios.post('http://localhost:8080/api/user/profiles/', params, {
         headers: { 'Content-Type': 'application/json' },
       });
     } catch (err) {

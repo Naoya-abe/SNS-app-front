@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -39,18 +40,61 @@ const Navbar = (props) => {
     props.cookies.remove('current-token');
     window.location.href = '/';
   };
-  const renderSwitch = (index) => {
+  const renderSwitch = (text, index) => {
     switch (index) {
       case 0:
-        return <HomeIcon />;
+        return (
+          <Link to='/home'>
+            <ListItem button>
+              <ListItemIcon>
+                <HomeIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        );
       case 1:
-        return <PersonIcon />;
+        return (
+          <Link to='/profile'>
+            <ListItem button>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        );
       case 2:
-        return <MailIcon />;
+        return (
+          <Link to='/inbox'>
+            <ListItem button>
+              <ListItemIcon>
+                <MailIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        );
       case 3:
-        return <PeopleIcon />;
+        return (
+          <Link to='/friends'>
+            <ListItem button>
+              <ListItemIcon>
+                <PeopleIcon />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        );
       default:
-        return <ExitToAppIcon />;
+        return (
+          <ListItem button onClick={Signout}>
+            <ListItemIcon>
+              <ExitToAppIcon />
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        );
     }
   };
   return (
@@ -66,18 +110,14 @@ const Navbar = (props) => {
       >
         <div className={classes.toolbar} />
         <List>
-          {['Home', 'Profile', 'DM', 'Friends', 'Sign Out'].map((text, index) =>
-            index === 4 ? (
-              <ListItem button key={text} onClick={Signout}>
-                <ListItemIcon>{renderSwitch(index)}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            ) : (
-              <ListItem button key={text}>
-                <ListItemIcon>{renderSwitch(index)}</ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItem>
-            )
+          {['Home', 'Profile', 'DM', 'Friends', 'Sign Out'].map(
+            (text, index) => {
+              return (
+                <React.Fragment key={text}>
+                  {renderSwitch(text, index)}
+                </React.Fragment>
+              );
+            }
           )}
         </List>
       </Drawer>

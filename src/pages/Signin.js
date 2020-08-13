@@ -113,7 +113,7 @@ const Signin = (props) => {
       });
       props.cookies.set('current-token', res.data.token);
       // TODO: memory error
-      window.location.href('/');
+      window.location.href = '/';
       dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
       dispatch({ type: ERROR_CATCHED });

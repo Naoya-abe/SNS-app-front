@@ -6,10 +6,10 @@ import '../../styles/components/Posts/PostItem.scss';
 const PostItem = (props) => {
   const { displayName, avatar, content } = props;
   return (
-    <div>
+    <React.Fragment>
       <UserHeader avatar={avatar} displayName={displayName} />
       <div className='post-content'>{content}</div>
-    </div>
+    </React.Fragment>
   );
 };
 

@@ -9,6 +9,7 @@ const ApiContextProvider = (props) => {
   const [profile, setProfile] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
   const [posts, setPosts] = useState([]);
+
   useEffect(() => {
     const getMyProfile = async () => {
       try {
@@ -25,7 +26,6 @@ const ApiContextProvider = (props) => {
   }, [token, profile.id]);
 
   const createPost = async (params) => {
-    console.log(params);
     try {
       const res = await axios.post('http://localhost:8080/api/post/', params, {
         headers: { Authorization: `Token ${token}` },
@@ -41,7 +41,6 @@ const ApiContextProvider = (props) => {
       const res = await axios.get('http://localhost:8080/api/post/', {
         headers: { Authorization: `Token ${token}` },
       });
-      console.log(res);
       setPosts(res.data);
     } catch (err) {
       console.log(err);

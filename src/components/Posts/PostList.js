@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import PostItem from './PostItem';
 
@@ -11,11 +12,14 @@ const PostList = ({ posts }) => {
         {posts.map((datum) => {
           return (
             <React.Fragment key={datum.id}>
-              <PostItem
-                displayName={datum.postFrom.displayName}
-                avatar={datum.postFrom.avatar}
-                content={datum.content}
-              />
+              <Link to={`/posts/detail/${datum.id}`}>
+                <PostItem
+                  displayName={datum.postFrom.displayName}
+                  avatar={datum.postFrom.avatar}
+                  content={datum.content}
+                />
+              </Link>
+
               <Divider />
             </React.Fragment>
           );

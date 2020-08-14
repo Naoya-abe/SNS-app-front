@@ -1,3 +1,10 @@
-.user-header{
+.user-header {
     display: flex;
+
+    .display-name {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        font-size: medium;
+    }
 }

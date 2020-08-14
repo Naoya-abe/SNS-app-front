@@ -1,16 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { withCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Divider } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { ApiContext } from '../../context/ApiContext';
 import PostItem from '../../components/Posts/PostItem';
+
+import '../../styles/pages/Post/PostDetail.scss';
 
 const PostDetail = (ownProps) => {
   const [post, setPost] = useState({});
   const token = ownProps.cookies.get('current-token');
+  const { profile } = useContext(ApiContext);
+  const userProfile = profile[0];
+  const postId = ownProps.match.params.id;
 
   useEffect(() => {
-    const postId = ownProps.match.params.id;
     const getPost = async (id) => {
       try {
         const res = await axios.get(`http://localhost:8080/api/post/${id}`, {
@@ -22,28 +29,45 @@ const PostDetail = (ownProps) => {
       }
     };
     getPost(postId);
-  }, [ownProps.match.params.id, token]);
-  console.log(post);
+  }, [ownProps.match.params.id, postId, token]);
   return (
     <div className='post-detail'>
       <h3>Post Detail</h3>
       <Divider />
       {post.id ? (
-        <PostItem
-          avatar={post.postFrom.avatar}
-          displayName={post.postFrom.displayName}
-          content={post.content}
-        />
-      ) : null}
-
-      <div className='button-container'>
-        <Button variant='outlined' color='primary'>
-          Edit
-        </Button>
-        <Button variant='outlined' color='primary'>
-          Delete
-        </Button>
-      </div>
+        userProfile.id === post.postFrom.id ? (
+          // aがTrue、bもTrue
+          <React.Fragment>
+            <PostItem
+              avatar={post.postFrom.avatar}
+              displayName={post.postFrom.displayName}
+              content={post.content}
+            />
+            <div className='button-container'>
+              <Link to={`/posts/edit/${postId}`}>
+                <Button variant='outlined' color='primary'>
+                  Edit
+                </Button>
+              </Link>
+              <Link to={`/posts/delete/${postId}`}>
+                <Button variant='outlined' color='secondary'>
+                  Delete
+                </Button>
+              </Link>
+            </div>
+          </React.Fragment>
+        ) : (
+          // aがTrue、bがFalse
+          <PostItem
+            avatar={post.postFrom.avatar}
+            displayName={post.postFrom.displayName}
+            content={post.content}
+          />
+        )
+      ) : (
+        // aがfalse
+        <CircularProgress size={25} color='secondary' />
+      )}
     </div>
   );
 };

@@ -47,8 +47,25 @@ const ApiContextProvider = (props) => {
     }
   };
 
+  const putPost = async (params, postId) => {
+    try {
+      const res = await axios.put(
+        `http://localhost:8080/api/post/${postId}/`,
+        params,
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
+      return res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <ApiContext.Provider value={{ profile, createPost, posts, getPosts }}>
+    <ApiContext.Provider
+      value={{ profile, createPost, putPost, posts, getPosts }}
+    >
       {props.children}
     </ApiContext.Provider>
   );

@@ -7,14 +7,17 @@ import '../../styles/components/Posts/PostCreate.scss';
 
 const PostCreate = ({ profile, createPost }) => {
   const { register, handleSubmit } = useForm();
+  const userProfile = profile[0];
   const handleCreate = (data, e) => {
-    const params = { ...data, postFromId: profile[0].id };
+    const params = { ...data, postFromId: userProfile.id };
     createPost(params);
     e.target.reset();
   };
   return (
     <div className='create-post'>
-      <ImageAvatar alt='User avatar' src='aaaaa' />
+      {userProfile && (
+        <ImageAvatar alt='User avatar' src={userProfile.avatar} />
+      )}
       <form onSubmit={handleSubmit(handleCreate)}>
         <textarea
           name='content'

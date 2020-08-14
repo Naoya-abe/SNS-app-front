@@ -1,0 +1,28 @@
+.post-detail{
+    width: 50%;
+
+    .user-header{
+        .MuiAvatar-root{
+            width: 80px;
+            height: 80px;
+        }
+        .display-name {
+            font-size: x-large;
+        }
+    }
+
+    .post-content{
+        margin-top: -20px;
+        padding-left: 96px;
+        font-size: large;
+    }
+
+    .button-container{
+        margin-top: 10px;
+        padding-left: 96px;
+
+        button{
+            margin-right: 10px;
+        }
+    }
+}

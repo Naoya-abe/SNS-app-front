@@ -7,7 +7,7 @@ const UserHeader = ({ avatar, displayName }) => {
   return (
     <div className='user-header'>
       <ImageAvatar avatar={avatar} />
-      <h4>{displayName}</h4>
+      <p className='display-name'>{displayName}</p>
     </div>
   );
 };

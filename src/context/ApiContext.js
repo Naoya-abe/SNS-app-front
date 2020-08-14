@@ -49,14 +49,9 @@ const ApiContextProvider = (props) => {
 
   const putPost = async (params, postId) => {
     try {
-      const res = await axios.put(
-        `http://localhost:8080/api/post/${postId}/`,
-        params,
-        {
-          headers: { Authorization: `Token ${token}` },
-        }
-      );
-      return res.data;
+      await axios.put(`http://localhost:8080/api/post/${postId}/`, params, {
+        headers: { Authorization: `Token ${token}` },
+      });
     } catch (err) {
       console.log(err);
     }

@@ -20,10 +20,9 @@ const PostEdit = (ownProps) => {
   const postId = ownProps.match.params.id;
   const handleEdit = (data, e) => {
     const params = { ...data, postFromId: userProfile.id };
-    const res = putPost(params, postId);
-    if (res) {
-      history.push(`/posts/detail/${postId}`);
-    }
+    putPost(params, postId);
+    // DBの内容変更前にページ遷移しちゃうので修正する
+    history.push(`/posts/detail/${postId}`);
   };
   const handleCancel = () => {
     history.goBack();

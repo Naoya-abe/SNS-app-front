@@ -5,6 +5,9 @@ const paths = {
   signin: {
     main: '/signin',
   },
+  home: {
+    main: '/home',
+  },
   posts: {
     delete: '/posts/delete/:id',
     detail: '/posts/detail/:id',

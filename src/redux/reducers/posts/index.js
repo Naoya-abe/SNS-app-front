@@ -20,6 +20,7 @@ export default (state = {}, action) => {
     case EDIT_POST:
       return { ...state, [action.payload.id]: action.payload };
     case DELETE_POST:
+      console.log(action.payload);
       return _.omit(state, action.payload);
     default:
       return state;

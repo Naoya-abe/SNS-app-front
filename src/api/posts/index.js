@@ -43,3 +43,14 @@ export const editPostAPI = async (token, postId, params) => {
     throw err;
   }
 };
+
+export const deletePostAPI = async (token, postId) => {
+  try {
+    const response = await base.delete(`api/post/${postId}/`, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

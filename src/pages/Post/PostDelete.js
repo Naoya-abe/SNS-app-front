@@ -1,8 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withCookies } from 'react-cookie';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Button from '@material-ui/core/Button';
+import { deletePost } from '../../redux/actions/posts';
 import history from '../../history';
+import '../../styles/pages/Post/PostDelete.scss';
 
 function getModalStyle() {
   const top = 50;
@@ -26,17 +30,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const PostDelete = () => {
+const PostDelete = (props) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = React.useState(getModalStyle);
-
+  const { match, cookies, deletePost } = props;
+  const postId = match.params.id;
+  const token = cookies.get('current-token');
   const handleClose = () => {
     history.goBack();
   };
-
-  const deletePost = () => {
-    console.log('delete');
+  const handleDelete = () => {
+    deletePost(token, postId);
   };
 
   const body = (
@@ -47,7 +52,7 @@ const PostDelete = () => {
           variant='outlined'
           color='secondary'
           type='submit'
-          onClick={deletePost}
+          onClick={handleDelete}
         >
           Delete
         </Button>
@@ -71,4 +76,6 @@ const PostDelete = () => {
   );
 };
 
-export default PostDelete;
+const cookiePostDelete = withCookies(PostDelete);
+
+export default connect(null, { deletePost })(cookiePostDelete);

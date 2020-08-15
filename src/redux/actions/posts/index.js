@@ -3,6 +3,7 @@ import {
   fetchPostAPI,
   fetchPostsAPI,
   editPostAPI,
+  deletePostAPI,
 } from '../../../api/posts';
 
 import {
@@ -48,6 +49,16 @@ export const editPost = (token, postId, params) => async (dispatch) => {
     const response = await editPostAPI(token, postId, params);
     dispatch({ type: EDIT_POST, payload: response.data });
     history.push(`/posts/detail/${postId}`);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deletePost = (token, postId) => async (dispatch) => {
+  try {
+    const response = await deletePostAPI(token, postId);
+    dispatch({ type: DELETE_POST, payload: response.data });
+    history.push(paths.home.main);
   } catch (err) {
     throw err;
   }

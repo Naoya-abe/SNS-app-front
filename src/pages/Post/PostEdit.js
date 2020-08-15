@@ -19,7 +19,6 @@ const PostEdit = (props) => {
   const handleEdit = (data) => {
     const params = { ...data, postFromId: userProfile.id };
     editPost(token, postId, params);
-    console.log(data);
   };
   const handleCancel = () => {
     history.goBack();

@@ -1,5 +1,5 @@
-import React, { useReducer } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { connect } from 'react-redux';
 import { Link as RouterLink } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
@@ -14,12 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {
-  START_FETCH,
-  FETCH_SUCCESS,
-  ERROR_CATCHED,
-} from '../components/actionTypes';
-import history from '../history';
+import { createUser } from '../redux/actions/users';
 import '../styles/components/Signup.scss';
 
 const Copyright = () => {
@@ -69,63 +64,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// useReduserを使ってSignup.jsの状態を管理する
-const initialState = {
-  isLoading: false,
-  error: '',
-};
-
-// stateを変更するreducerを書く
-const signupReducer = (state, action) => {
-  switch (action.type) {
-    case START_FETCH:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case FETCH_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-      };
-    case ERROR_CATCHED:
-      return {
-        ...state,
-        isLoading: false,
-        error: 'Bad Request',
-      };
-    default:
-      return state;
-  }
-};
-
-const Signup = () => {
+const Signup = (props) => {
   const classes = useStyles();
-  const [state, dispatch] = useReducer(signupReducer, initialState);
   const { register, handleSubmit } = useForm();
-
-  const signup = async (data) => {
-    const params = {
-      email: data.email,
-      password: data.password,
-      displayName: data.displayName,
-    };
-    try {
-      await axios.post('http://localhost:8080/api/user/profiles/', params, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-    } catch (err) {
-      dispatch({ type: ERROR_CATCHED });
-      console.log(err);
-    }
-  };
+  const { createUser } = props;
 
   const handleSignup = (data) => {
-    dispatch({ type: START_FETCH });
-    signup(data);
-    // TODO:memoryErrorの修正
-    history.push('/signin');
-    dispatch({ type: FETCH_SUCCESS });
+    try {
+      createUser(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -203,7 +152,7 @@ const Signup = () => {
               },
             })}
           />
-          <span className={classes.spanError}>{state.error}</span>
+          {/* <span className={classes.spanError}>{state.error}</span> */}
           <Button
             type='submit'
             fullWidth
@@ -211,11 +160,12 @@ const Signup = () => {
             color='primary'
             className={classes.submit}
           >
-            {state.isLoading ? (
+            Sign Up
+            {/* {state.isLoading ? (
               <CircularProgress size={25} color='secondary' />
             ) : (
               'Sign Up'
-            )}
+            )} */}
           </Button>
           <Grid container className='to-signin'>
             <Grid item>
@@ -231,4 +181,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default connect(null, { createUser })(Signup);

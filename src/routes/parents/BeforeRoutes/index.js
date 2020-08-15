@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
-import Signin from '../../pages/Signin';
-import Signup from '../../pages/Signup';
+import Signin from '../../../pages/Signin';
+import Signup from '../../../pages/Signup';
 
-const BeforeRoutes = () => {
+const beforeRoutes = () => {
   return (
     <React.Fragment>
       <Route exact path='/signin' component={Signin} />
@@ -13,4 +13,4 @@ const BeforeRoutes = () => {
   );
 };
 
-export default BeforeRoutes;
+export default beforeRoutes;

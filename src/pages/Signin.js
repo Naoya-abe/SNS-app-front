@@ -1,7 +1,6 @@
-import React, { useReducer } from 'react';
+import React from 'react';
 import { withCookies } from 'react-cookie';
 import { Link as RouterLink } from 'react-router-dom';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -15,12 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {
-  START_FETCH,
-  FETCH_SUCCESS,
-  ERROR_CATCHED,
-  INPUT_EDIT,
-} from '../components/actionTypes';
+import { fetchUserTokenAPI } from '../api/users';
 import '../styles/components/Signin.scss';
 
 const Copyright = () => {
@@ -70,53 +64,16 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-// useReduserを使ってSignin.jsの状態を管理する
-const initialState = {
-  isLoading: false,
-  error: '',
-};
-
-// stateを変更するreducerを書く
-const signinReducer = (state, action) => {
-  switch (action.type) {
-    case START_FETCH:
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case FETCH_SUCCESS:
-      return {
-        ...state,
-        isLoading: false,
-      };
-    case ERROR_CATCHED:
-      return {
-        ...state,
-        isLoading: false,
-        error: 'Email or password is not correct',
-      };
-    default:
-      return state;
-  }
-};
-
 const Signin = (props) => {
   const classes = useStyles();
-  const [state, dispatch] = useReducer(signinReducer, initialState);
   const { register, handleSubmit } = useForm();
 
-  const signin = async (data) => {
+  const signin = (data) => {
     try {
-      dispatch({ type: START_FETCH });
-      const res = await axios.post('http://localhost:8080/authen/', data, {
-        headers: { 'Content-Type': 'application/json' },
-      });
-      props.cookies.set('current-token', res.data.token);
-      // TODO: memory error
+      const res = fetchUserTokenAPI(data);
+      props.cookies.set('current-token', res.token);
       window.location.href = '/';
-      dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
-      dispatch({ type: ERROR_CATCHED });
       console.log(err);
     }
   };
@@ -143,7 +100,7 @@ const Signin = (props) => {
             fullWidth
             id='email'
             label='Email Address'
-            name='username'
+            name='email'
             autoComplete='email'
             autoFocus
             inputRef={register({
@@ -179,7 +136,7 @@ const Signin = (props) => {
               },
             })}
           />
-          <span className={classes.spanError}>{state.error}</span>
+          {/* <span className={classes.spanError}>{state.error}</span> */}
           <Button
             type='submit'
             fullWidth
@@ -187,11 +144,7 @@ const Signin = (props) => {
             color='primary'
             className={classes.submit}
           >
-            {state.isLoading ? (
-              <CircularProgress size={25} color='secondary' />
-            ) : (
-              'Sign In'
-            )}
+            Sign In
           </Button>
           <Grid container className='to-signup'>
             <Grid item>

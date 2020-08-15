@@ -1,13 +1,13 @@
 import base from '../base';
 
-export const createPostAPI = async (token) => {
+export const createPostAPI = async (token, params) => {
   try {
-    const response = await base.get('api/post/', {
+    const response = await base.post('api/post/', params, {
       headers: { Authorization: `Token ${token}` },
     });
     return response;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -18,7 +18,7 @@ export const fetchPostAPI = async (token) => {
     });
     return response;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };
 
@@ -29,6 +29,6 @@ export const fetchPostsAPI = async (token) => {
     });
     return response;
   } catch (err) {
-    console.log(err);
+    throw err;
   }
 };

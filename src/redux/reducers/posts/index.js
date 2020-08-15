@@ -10,10 +10,9 @@ import {
 export default (state = {}, action) => {
   switch (action.type) {
     case CREATE_POST:
-      return state;
+      return { ...state, [action.payload.id]: action.payload };
     case FETCH_POSTS:
       return {
-        // count: action.payload.count,
         ..._.mapKeys(action.payload, 'id'),
       };
     case FETCH_POST:

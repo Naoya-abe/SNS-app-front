@@ -1,16 +1,17 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
+import { createPost } from '../../redux/actions/posts';
 import ImageAvatar from '../ImageAvatar';
 
 import '../../styles/components/Posts/PostCreate.scss';
 
-const PostCreate = ({ profile, createPost }) => {
+const PostCreate = ({ userProfile, token, createPost }) => {
   const { register, handleSubmit } = useForm();
-  const userProfile = profile[0];
   const handleCreate = (data, e) => {
     const params = { ...data, postFromId: userProfile.id };
-    createPost(params);
+    createPost(token, params);
     e.target.reset();
   };
   return (
@@ -40,4 +41,4 @@ const PostCreate = ({ profile, createPost }) => {
   );
 };
 
-export default PostCreate;
+export default connect(null, { createPost })(PostCreate);

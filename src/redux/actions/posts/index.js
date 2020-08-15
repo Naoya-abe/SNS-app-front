@@ -11,11 +11,10 @@ import {
 import history from '../../../history';
 import paths from '../../../config/paths';
 
-export const createPost = (data) => async (dispatch) => {
+export const createPost = (token, params) => async (dispatch) => {
   try {
-    const response = await createPostAPI(data);
+    const response = await createPostAPI(token, params);
     dispatch({ type: CREATE_POST, payload: response.data });
-    history.push(paths.signin.main);
   } catch (err) {
     throw err;
   }

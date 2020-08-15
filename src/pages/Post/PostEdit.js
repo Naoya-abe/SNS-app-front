@@ -1,50 +1,43 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import { Divider } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { ApiContext } from '../../context/ApiContext';
+import { fetchPost, editPost } from '../../redux/actions/posts';
 import ImageAvatar from '../../components/ImageAvatar';
 import history from '../../history';
 
 import '../../styles/pages/Post/PostEdit.scss';
 
-const PostEdit = (ownProps) => {
-  const [post, setPost] = useState({});
-  const token = ownProps.cookies.get('current-token');
+const PostEdit = (props) => {
   const { register, handleSubmit } = useForm();
-  const { profile, putPost } = useContext(ApiContext);
-  const userProfile = profile[0];
-  const postId = ownProps.match.params.id;
-  const handleEdit = (data, e) => {
+  const { userProfile, post, match, cookies, fetchPost, editPost } = props;
+  const token = cookies.get('current-token');
+  const postId = match.params.id;
+  const handleEdit = (data) => {
     const params = { ...data, postFromId: userProfile.id };
-    putPost(params, postId);
-    // DBの内容変更前にページ遷移しちゃうので修正する
-    history.push(`/posts/detail/${postId}`);
+    editPost(token, postId, params);
+    console.log(data);
   };
   const handleCancel = () => {
     history.goBack();
   };
   useEffect(() => {
-    const getPost = async (id) => {
+    (async () => {
       try {
-        const res = await axios.get(`http://localhost:8080/api/post/${id}`, {
-          headers: { Authorization: `Token ${token}` },
-        });
-        setPost(res.data);
+        fetchPost(token, postId);
       } catch (err) {
         console.log(err);
       }
-    };
-    getPost(postId);
-  }, [ownProps.match.params.id, postId, token]);
+    })();
+  }, [fetchPost, postId, token]);
   return (
     <div className='edit-post'>
       <h3>Post Edit</h3>
       <Divider />
-      {post.id ? (
+      {post ? (
         <form onSubmit={handleSubmit(handleEdit)} className='edit-post-form'>
           {userProfile && (
             <ImageAvatar alt='User avatar' src={userProfile.avatar} />
@@ -85,4 +78,13 @@ const PostEdit = (ownProps) => {
   );
 };
 
-export default withCookies(PostEdit);
+const cookiesPostEdit = withCookies(PostEdit);
+
+const mapStateToProps = (state, ownProps) => {
+  const postId = ownProps.match.params.id;
+  return { userProfile: state.user, post: state.posts[postId] };
+};
+
+export default connect(mapStateToProps, { fetchPost, editPost })(
+  cookiesPostEdit
+);

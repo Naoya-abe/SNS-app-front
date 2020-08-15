@@ -16,6 +16,7 @@ export default (state = {}, action) => {
         ..._.mapKeys(action.payload, 'id'),
       };
     case FETCH_POST:
+      return { ...state, [action.payload.id]: action.payload };
     case EDIT_POST:
       return { ...state, [action.payload.id]: action.payload };
     case DELETE_POST:

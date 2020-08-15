@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState } from 'react';
 import { withCookies } from 'react-cookie';
 import axios from 'axios';
 
@@ -9,28 +9,6 @@ const ApiContextProvider = (props) => {
   const [profile, setProfile] = useState([]);
   const [userProfiles, setUserProfiles] = useState([]);
   const [posts, setPosts] = useState([]);
-
-  const createPost = async (params) => {
-    try {
-      const res = await axios.post('http://localhost:8080/api/post/', params, {
-        headers: { Authorization: `Token ${token}` },
-      });
-      setPosts([...posts, res.data]);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getPosts = async () => {
-    try {
-      const res = await axios.get('http://localhost:8080/api/post/', {
-        headers: { Authorization: `Token ${token}` },
-      });
-      setPosts(res.data);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const putPost = async (params, postId) => {
     try {
@@ -43,9 +21,7 @@ const ApiContextProvider = (props) => {
   };
 
   return (
-    <ApiContext.Provider
-      value={{ profile, createPost, putPost, posts, getPosts }}
-    >
+    <ApiContext.Provider value={{ profile, putPost, posts }}>
       {props.children}
     </ApiContext.Provider>
   );

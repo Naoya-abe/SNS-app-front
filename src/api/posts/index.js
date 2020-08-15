@@ -11,9 +11,9 @@ export const createPostAPI = async (token, params) => {
   }
 };
 
-export const fetchPostAPI = async (token) => {
+export const fetchPostAPI = async (token, postId) => {
   try {
-    const response = await base.get('api/post/', {
+    const response = await base.get(`api/post/${postId}`, {
       headers: { Authorization: `Token ${token}` },
     });
     return response;
@@ -25,6 +25,17 @@ export const fetchPostAPI = async (token) => {
 export const fetchPostsAPI = async (token) => {
   try {
     const response = await base.get('api/post/', {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const editPostAPI = async (token, postId, params) => {
+  try {
+    const response = await base.put(`api/post/${postId}/`, params, {
       headers: { Authorization: `Token ${token}` },
     });
     return response;

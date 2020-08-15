@@ -68,10 +68,10 @@ const Signin = (props) => {
   const classes = useStyles();
   const { register, handleSubmit } = useForm();
 
-  const signin = (data) => {
+  const handleSignin = async (data) => {
     try {
-      const res = fetchUserTokenAPI(data);
-      props.cookies.set('current-token', res.token);
+      const response = await fetchUserTokenAPI(data);
+      props.cookies.set('current-token', response.token);
       window.location.href = '/';
     } catch (err) {
       console.log(err);
@@ -91,7 +91,7 @@ const Signin = (props) => {
         <form
           className={classes.form}
           noValidate
-          onSubmit={handleSubmit(signin)}
+          onSubmit={handleSubmit(handleSignin)}
         >
           <TextField
             variant='outlined'

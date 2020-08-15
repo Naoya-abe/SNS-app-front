@@ -28,17 +28,29 @@ export const fetchUserTokenAPI = async (data) => {
   }
 };
 
-export const fetchUserAPI = async () => {
+export const fetchMyProfileAPI = async (token) => {};
+
+export const fetchUserAPI = async (token) => {
   try {
-    const token = sessionStorage.getItem('token');
-    const userId = sessionStorage.getItem('userId');
-    const response = await base.get(`users/${userId}`, {
-      headers: {
-        Authorization: `Token ${token}`,
-      },
+    const response = await base.get('api/user/myprofile/', {
+      headers: { Authorization: `Token ${token}` },
     });
     return response;
   } catch (err) {
     throw err;
   }
 };
+
+// export const fetchUserAPI = async (token) => {
+//   try {
+//     const userId = sessionStorage.getItem('userId');
+//     const response = await base.get(`users/${userId}`, {
+//       headers: {
+//         Authorization: `Token ${token}`,
+//       },
+//     });
+//     return response;
+//   } catch (err) {
+//     throw err;
+//   }
+// };

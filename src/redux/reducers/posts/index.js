@@ -1,0 +1,27 @@
+import _ from 'lodash';
+import {
+  CREATE_POST,
+  FETCH_POST,
+  FETCH_POSTS,
+  EDIT_POST,
+  DELETE_POST,
+} from '../../actions/posts/types';
+
+export default (state = {}, action) => {
+  switch (action.type) {
+    case CREATE_POST:
+      return state;
+    case FETCH_POSTS:
+      return {
+        // count: action.payload.count,
+        ..._.mapKeys(action.payload, 'id'),
+      };
+    case FETCH_POST:
+    case EDIT_POST:
+      return { ...state, [action.payload.id]: action.payload };
+    case DELETE_POST:
+      return _.omit(state, action.payload);
+    default:
+      return state;
+  }
+};

@@ -1,30 +1,43 @@
-import React, { useEffect, useContext } from 'react';
-import { ApiContext } from '../context/ApiContext';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withCookies } from 'react-cookie';
 import { Divider } from '@material-ui/core';
+import { fetchPosts } from '../redux/actions/posts';
 import PostCreate from '../components/Posts/PostCreate';
 import PostList from '../components/Posts/PostList';
 
 import '../styles/components/Home.scss';
 
-const Home = () => {
-  const { profile, posts, createPost, getPosts } = useContext(ApiContext);
-
+const Home = (props) => {
+  const { fetchPosts, posts } = props;
+  const token = props.cookies.get('current-token');
   useEffect(() => {
-    // 無限ループの修正：現在のコードは仮置き getPostsをここで定義すれば問題ない
-    if (posts.length === 0) {
-      getPosts();
-    }
-  }, [getPosts, posts]);
+    (async () => {
+      try {
+        await fetchPosts(token);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [fetchPosts, token]);
 
   return (
     <div className='home'>
       <h3>HOME</h3>
       <Divider />
-      <PostCreate profile={profile} createPost={createPost} />
+      {/* <PostCreate profile={profile} createPost={createPost} /> */}
       <Divider className='home-divider' />
       <PostList posts={posts} />
     </div>
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    posts: Object.values(state.posts),
+  };
+};
+
+const cookieHome = withCookies(Home);
+
+export default connect(mapStateToProps, { fetchPosts })(cookieHome);

@@ -15,9 +15,9 @@ export const createUser = (data) => async (dispatch) => {
   }
 };
 
-export const fetchUser = () => async (dispatch) => {
+export const fetchUser = (token) => async (dispatch) => {
   try {
-    const response = await fetchUserAPI();
+    const response = await fetchUserAPI(token);
     dispatch({ type: FETCH_USER, payload: response.data });
   } catch (err) {
     throw err;

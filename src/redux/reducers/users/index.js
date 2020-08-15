@@ -10,7 +10,8 @@ export default (state = {}, action) => {
     case CREATE_USER:
       return { ...action.payload };
     case FETCH_USER:
-      return { ...action.payload };
+      // 配列をオブジェクトに変換
+      return Object.assign({}, ...action.payload);
     case EDIT_USER:
       return { ...action.payload };
     case DELETE_USER:

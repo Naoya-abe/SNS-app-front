@@ -20,9 +20,10 @@ const theme = createMuiTheme({
 });
 
 const Routes = (props) => {
+  const token = props.cookies.get('current-token');
   return (
     <MuiThemeProvider theme={theme}>
-      {props.cookies.get('current-token') ? <AfterRoutes /> : <BeforeRoutes />}
+      {token ? <AfterRoutes token={token} /> : <BeforeRoutes />}
     </MuiThemeProvider>
   );
 };

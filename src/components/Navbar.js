@@ -13,6 +13,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PeopleIcon from '@material-ui/icons/People';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { withCookies } from 'react-cookie';
+import paths from '../config/paths';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -44,7 +45,7 @@ const Navbar = (props) => {
     switch (index) {
       case 0:
         return (
-          <Link to='/home'>
+          <Link to={paths.home.main}>
             <ListItem button>
               <ListItemIcon>
                 <HomeIcon />
@@ -55,7 +56,7 @@ const Navbar = (props) => {
         );
       case 1:
         return (
-          <Link to='/profile'>
+          <Link to={paths.profiles.myprofile.main}>
             <ListItem button>
               <ListItemIcon>
                 <PersonIcon />

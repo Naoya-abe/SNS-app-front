@@ -3,12 +3,19 @@ import ImageAvatar from './ImageAvatar';
 
 import '../styles/components/UserHeader.scss';
 
-const UserHeader = ({ avatar, displayName }) => {
+const UserHeader = ({ avatar, displayName, detail, about }) => {
   return (
-    <div className='user-header'>
-      <ImageAvatar avatar={avatar} />
-      <p className='display-name'>{displayName}</p>
-    </div>
+    <React.Fragment>
+      <div className='user-header'>
+        <ImageAvatar avatar={avatar} />
+        <h3 className='display-name'>{displayName}</h3>
+      </div>
+      {detail && (
+        <div className='about-user'>
+          <p>{about}</p>
+        </div>
+      )}
+    </React.Fragment>
   );
 };
 

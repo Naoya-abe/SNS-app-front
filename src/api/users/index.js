@@ -50,6 +50,17 @@ export const patchUserAPI = async (token, userId, params) => {
   }
 };
 
+export const deleteUserAPI = async (token, userId) => {
+  try {
+    const response = await base.delete(`api/user/profiles/${userId}/`, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
 // export const fetchUserAPI = async (token) => {
 //   try {
 //     const userId = sessionStorage.getItem('userId');

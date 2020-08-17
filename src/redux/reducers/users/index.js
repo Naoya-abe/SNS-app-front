@@ -18,7 +18,7 @@ export default (state = {}, action) => {
     case EDIT_USER:
       return { ...action.payload };
     case DELETE_USER:
-      return { ...action.payload };
+      return {};
     default:
       return state;
   }

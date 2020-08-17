@@ -1,6 +1,11 @@
-import { createUserAPI, fetchUserAPI, patchUserAPI } from '../../../api/users';
+import {
+  createUserAPI,
+  fetchUserAPI,
+  patchUserAPI,
+  deleteUserAPI,
+} from '../../../api/users';
 
-import { CREATE_USER, FETCH_USER, PATCH_USER } from './types';
+import { CREATE_USER, FETCH_USER, PATCH_USER, DELETE_USER } from './types';
 
 import history from '../../../history';
 import paths from '../../../config/paths';
@@ -28,6 +33,15 @@ export const patchUser = (token, userId, params) => async (dispatch) => {
   try {
     const response = await patchUserAPI(token, userId, params);
     dispatch({ type: PATCH_USER, payload: response.data });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteUser = (token, userId) => async (dispatch) => {
+  try {
+    const response = await deleteUserAPI(token, userId);
+    dispatch({ type: DELETE_USER, payload: response.data });
   } catch (err) {
     throw err;
   }

@@ -6,6 +6,7 @@ import Home from '../../../pages/Home';
 import SidebarColumn from '../../../components/SidebarColumn';
 import PostRoutes from '../../children/PostRoutes';
 import ProfileRoutes from '../../children/ProfileRoutes';
+import DMRoutes from '../../children/DMRoutes';
 import { fetchUser } from '../../../redux/actions/users';
 
 import '../../../styles/routes/parents/AfterRoutes.scss';
@@ -29,6 +30,7 @@ const AfterRoutes = (props) => {
         <Route exact path='/home' component={Home} />
         <Route path='/posts' component={PostRoutes} />
         <Route path='/profiles' component={ProfileRoutes} />
+        <Route path='/dm' component={DMRoutes} />
         <Redirect exact from='/' to='/home' />
       </Switch>
       <SidebarColumn />

@@ -67,7 +67,7 @@ const Navbar = (props) => {
         );
       case 2:
         return (
-          <Link to='/inbox'>
+          <Link to={paths.dm.create}>
             <ListItem button>
               <ListItemIcon>
                 <MailIcon />

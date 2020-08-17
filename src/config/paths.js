@@ -22,6 +22,10 @@ const paths = {
       delete: '/profiles/myprofile/delete',
     },
   },
+  dm: {
+    create: '/dm/create',
+    detail: '/dm/detail/:id',
+  },
 };
 
 export default paths;

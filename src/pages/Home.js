@@ -9,7 +9,7 @@ import PostList from '../components/Posts/PostList';
 import '../styles/components/Home.scss';
 
 const Home = (props) => {
-  const { fetchPosts, user, posts } = props;
+  const { fetchPosts, userProfile, posts } = props;
   const token = props.cookies.get('current-token');
   useEffect(() => {
     (async () => {
@@ -25,16 +25,16 @@ const Home = (props) => {
     <div className='home'>
       <h3>HOME</h3>
       <Divider />
-      <PostCreate userProfile={user} token={token} />
+      <PostCreate userProfile={userProfile} token={token} />
       <Divider className='home-divider' />
-      <PostList posts={posts} />
+      <PostList userProfile={userProfile} posts={posts} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    user: state.user,
+    userProfile: state.user,
     posts: Object.values(state.posts),
   };
 };

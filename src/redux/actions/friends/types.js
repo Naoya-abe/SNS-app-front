@@ -1,0 +1,7 @@
+export const CREATE_FRIEND = 'CREATE_FRIEND';
+export const FETCH_FRIEND = 'FETCH_FRIEND';
+export const FETCH_FRIENDS = 'FETCH_FRIENDS';
+export const EDIT_FRIEND = 'EDIT_FRIEND';
+export const DELETE_FRIEND = 'DELETE_FRIEND';
+
+export const FETCH_USER_FRIENDS = 'FETCH_USER_FRIENDS';

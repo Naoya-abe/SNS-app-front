@@ -1,25 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+
 import { Divider } from '@material-ui/core';
 import PostItem from './PostItem';
 
 import '../../styles/components/Posts/PostList.scss';
 
-const PostList = ({ posts }) => {
+const PostList = ({ userProfile, posts }) => {
   return (
     <div className='post-list'>
       <div className='scroll-list'>
         {posts.map((datum) => {
           return (
             <React.Fragment key={datum.id}>
-              <Link to={`/posts/detail/${datum.id}`}>
-                <PostItem
-                  displayName={datum.postFrom.displayName}
-                  avatar={datum.postFrom.avatar}
-                  content={datum.content}
-                />
-              </Link>
-
+              <PostItem
+                userId={userProfile.id}
+                postUserId={datum.postFrom.id}
+                postId={datum.id}
+                displayName={datum.postFrom.displayName}
+                avatar={datum.postFrom.avatar}
+                content={datum.content}
+              />
               <Divider />
             </React.Fragment>
           );

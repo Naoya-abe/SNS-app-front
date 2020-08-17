@@ -1,15 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import UserHeader from '../UserHeader';
 
 import '../../styles/components/Posts/PostItem.scss';
+import RequsetButton from '../Friends/RequsetButton';
 
 const PostItem = (props) => {
-  const { displayName, avatar, content } = props;
+  const { userId, postUserId, postId, displayName, avatar, content } = props;
   return (
-    <React.Fragment>
-      <UserHeader avatar={avatar} displayName={displayName} />
-      <div className='post-content'>{content}</div>
-    </React.Fragment>
+    <div className='post-item'>
+      <Link to={`/posts/detail/${postId}`}>
+        <div className='post-container'>
+          <UserHeader avatar={avatar} displayName={displayName} />
+          <div className='post-content'>{content}</div>
+        </div>
+      </Link>
+      {userId !== postUserId ? (
+        <RequsetButton askFrom={userId} askTo={postUserId} />
+      ) : null}
+    </div>
   );
 };
 

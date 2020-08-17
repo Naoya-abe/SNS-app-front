@@ -2,7 +2,7 @@
     width: 50%;
     .user-header-form {
         display: flex;
-
+        margin-bottom: 20px;
         .user-avatar {
             .MuiAvatar-root{
                 width: 80px;
@@ -17,5 +17,21 @@
                 text-align: center;
             }
         }
+        .profile-container {
+            display: flex;
+            flex-direction: column;
+
+            .user-name-field {
+                margin: 10px 0 20px;
+            }
+            .about-field {
+                textarea {
+                    width: 520px;
+                }
+            }
+        }
+    }
+    .button-container {
+        padding-left: 96px;
     }
 }

@@ -54,6 +54,7 @@ const MyProfileEdit = (props) => {
                       message: 'Please enter within 20 letters',
                     },
                   })}
+                  className='user-name-field'
                 />
                 <TextField
                   name='about'
@@ -70,6 +71,7 @@ const MyProfileEdit = (props) => {
                       message: 'Please enter within 140 letters',
                     },
                   })}
+                  className='about-field'
                 />
               </div>
             </React.Fragment>

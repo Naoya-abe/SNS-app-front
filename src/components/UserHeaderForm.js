@@ -9,7 +9,7 @@ const UserHeaderForm = (props) => {
   return (
     <div className='user-avatar'>
       <ImageAvatar avatar={avatar} />
-      <Link to={paths.profiles.myprofile.avatar}>Change Avatar</Link>
+      <Link to={paths.profiles.myprofile.avatar}>Change</Link>
     </div>
   );
 };

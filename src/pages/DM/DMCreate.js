@@ -36,6 +36,7 @@ const DMCreate = (props) => {
   useEffect(() => {
     ((async) => {
       //   自分の申請が許可されたユーザ一覧を取得
+      //   その後にDM送り先の選択肢に入れる
     })();
   });
   const handleChange = (event) => {

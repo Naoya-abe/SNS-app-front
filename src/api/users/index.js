@@ -28,11 +28,20 @@ export const fetchUserTokenAPI = async (data) => {
   }
 };
 
-export const fetchMyProfileAPI = async (token) => {};
-
 export const fetchUserAPI = async (token) => {
   try {
     const response = await base.get('api/user/myprofile/', {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const patchUserAPI = async (token, userId, params) => {
+  try {
+    const response = await base.patch(`api/user/profiles/${userId}/`, params, {
       headers: { Authorization: `Token ${token}` },
     });
     return response;

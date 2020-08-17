@@ -5,22 +5,40 @@ import { Link } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { fetchUserPosts } from '../../redux/actions/posts';
 import UserHeader from '../../components/UserHeader';
 import paths from '../../config/paths';
+import PostList from '../../components/Posts/PostList';
+
+import '../../styles/pages/Profile/MyProfile.scss';
 
 const MyProfile = (props) => {
-  const { userProfile } = props;
+  const { userProfile, fetchUserPosts, cookies, userPosts } = props;
+  const token = cookies.get('current-token');
+
+  useEffect(() => {
+    ((async) => {
+      try {
+        fetchUserPosts(token);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, [fetchUserPosts, token]);
+
   return (
-    <div className='my-profile-detail'>
+    <div className='my-profile'>
       <h3>My Profile</h3>
       <Divider />
-      <UserHeader
-        // about={userProfile.about}
-        about={'aaaaaaaaaaaaaaaaaaaaaaaaaaaa'}
-        avatar={userProfile.avatar}
-        displayName={userProfile.displayName}
-        detail
-      />
+      <div className='my-profile-user-header'>
+        <UserHeader
+          about={userProfile.about}
+          avatar={userProfile.avatar}
+          displayName={userProfile.displayName}
+          detail
+        />
+      </div>
+
       <div className='button-container'>
         <Link to={paths.profiles.myprofile.edit}>
           <Button variant='outlined' color='primary'>
@@ -33,34 +51,16 @@ const MyProfile = (props) => {
           </Button>
         </Link>
       </div>
-      {/* {post && (
-            <React.Fragment>
-              <PostItem
-                avatar={post.postFrom.avatar}
-                displayName={post.postFrom.displayName}
-                content={post.content}
-              />
-              {userProfile && userProfile.id === post.postFrom.id ? (
-                <div className='button-container'>
-                  <Link to={`/posts/edit/${postId}`}>
-                    <Button variant='outlined' color='primary'>
-                      Edit
-                    </Button>
-                  </Link>
-                  <Link to={`/posts/delete/${postId}`}>
-                    <Button variant='outlined' color='secondary'>
-                      Delete
-                    </Button>
-                  </Link>
-                </div>
-              ) : null}
-            </React.Fragment> */}
+      <Divider className='home-divider' />
+      <PostList posts={userPosts} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  return { userProfile: state.user };
+  return { userProfile: state.user, userPosts: Object.values(state.userPosts) };
 };
 
-export default connect(mapStateToProps, null)(MyProfile);
+const cookieMyProfile = withCookies(MyProfile);
+
+export default connect(mapStateToProps, { fetchUserPosts })(cookieMyProfile);

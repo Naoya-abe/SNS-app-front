@@ -4,6 +4,7 @@ import {
   fetchPostsAPI,
   editPostAPI,
   deletePostAPI,
+  fetchUserPostsAPI,
 } from '../../../api/posts';
 
 import {
@@ -12,6 +13,7 @@ import {
   FETCH_POSTS,
   EDIT_POST,
   DELETE_POST,
+  FETCH_USER_POSTS,
 } from './types';
 
 import history from '../../../history';
@@ -59,6 +61,15 @@ export const deletePost = (token, postId) => async (dispatch) => {
     const response = await deletePostAPI(token, postId);
     dispatch({ type: DELETE_POST, payload: response.data });
     history.push(paths.home.main);
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const fetchUserPosts = (token) => async (dispatch) => {
+  try {
+    const response = await fetchUserPostsAPI(token);
+    dispatch({ type: FETCH_USER_POSTS, payload: response.data });
   } catch (err) {
     throw err;
   }

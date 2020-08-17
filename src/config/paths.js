@@ -18,6 +18,7 @@ const paths = {
     myprofile: {
       main: '/profiles/myprofile',
       edit: '/profiles/myprofile/edit',
+      avatar: '/profiles/myprofile/edit/avatar',
       delete: '/profiles/myprofile/delete',
     },
   },

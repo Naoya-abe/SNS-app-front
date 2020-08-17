@@ -1,0 +1,21 @@
+.my-profile-edit {
+    width: 50%;
+    .user-header-form {
+        display: flex;
+
+        .user-avatar {
+            .MuiAvatar-root{
+                width: 80px;
+                height: 80px;
+            }
+            .display-name {
+                font-size: x-large;
+            }
+            a {
+                display: inline-block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+}

@@ -54,3 +54,14 @@ export const deletePostAPI = async (token, postId) => {
     throw err;
   }
 };
+
+export const fetchUserPostsAPI = async (token) => {
+  try {
+    const response = await base.get('api/post/myposts/', {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

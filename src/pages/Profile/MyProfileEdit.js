@@ -1,11 +1,99 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { withCookies } from 'react-cookie';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+import { Divider, TextField } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { patchUser } from '../../redux/actions/users';
+import UserHeader from '../../components/UserHeader';
+import paths from '../../config/paths';
+import UserHeaderForm from '../../components/UserHeaderForm';
+import history from '../../history';
 
-const MyProfileEdit = () => {
+import '../../styles/pages/Profile/MyProfileEdit.scss';
+
+const MyProfileEdit = (props) => {
+  const { cookies, patchUser, userProfile } = props;
+  const token = cookies.get('current-token');
+  const userId = userProfile.id;
+  const { register, handleSubmit } = useForm();
+  const handleEdit = (data) => {
+    try {
+      patchUser(token, userId, data);
+      history.push(paths.profiles.myprofile.main);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const handleCancel = () => {
+    history.goBack();
+  };
   return (
-    <div>
-      <p>MyProfileEdit</p>
+    <div className='my-profile-edit'>
+      <h3>Edit My Profile</h3>
+      <Divider />
+      <form onSubmit={handleSubmit(handleEdit)}>
+        <div className='user-header-form'>
+          {userProfile.id && (
+            <React.Fragment>
+              <UserHeaderForm avatar={userProfile.avatar} />
+              <div className='profile-container'>
+                <TextField
+                  name='displayName'
+                  label='User Name'
+                  defaultValue={userProfile.displayName}
+                  inputRef={register({
+                    required: {
+                      value: true,
+                      message: 'Please enter user name',
+                    },
+                    maxLength: {
+                      value: 20,
+                      message: 'Please enter within 20 letters',
+                    },
+                  })}
+                />
+                <TextField
+                  name='about'
+                  label='Self Introduction'
+                  multiline
+                  defaultValue={userProfile.about}
+                  inputRef={register({
+                    required: {
+                      value: true,
+                      message: 'Please enter self introduction',
+                    },
+                    maxLength: {
+                      value: 140,
+                      message: 'Please enter within 140 letters',
+                    },
+                  })}
+                />
+              </div>
+            </React.Fragment>
+          )}
+        </div>
+        <div className='button-container'>
+          <Button variant='outlined' color='primary' type='submit'>
+            Edit
+          </Button>
+          <Button variant='outlined' color='default' onClick={handleCancel}>
+            Cancel
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default MyProfileEdit;
+const cookieMyProfileEdit = withCookies(MyProfileEdit);
+
+const mapStateToProps = (state) => {
+  return {
+    userProfile: state.user,
+  };
+};
+
+export default connect(mapStateToProps, { patchUser })(cookieMyProfileEdit);

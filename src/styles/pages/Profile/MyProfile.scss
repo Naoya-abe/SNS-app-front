@@ -1,0 +1,25 @@
+.my-profile{
+    width: 50%;
+    .my-profile-user-header{
+        .user-header{
+            .MuiAvatar-root{
+                width: 80px;
+                height: 80px;
+            }
+            .display-name {
+                font-size: x-large;
+            }
+        }
+        .about-user{
+            margin-top: -40px;
+            padding-left: 96px;
+            font-size: large;
+        }
+    }
+    
+
+    .button-container{
+        margin-bottom: 10px;
+        padding-left: 96px;
+    }
+}

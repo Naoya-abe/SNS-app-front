@@ -4,6 +4,7 @@ import ProfileDetail from '../../pages/Profile/ProfileDetail';
 import MyProfile from '../../pages/Profile/MyProfile';
 import MyProfileDelete from '../../pages/Profile/MyProfileDelete';
 import MyProfileEdit from '../../pages/Profile/MyProfileEdit';
+import MyAvatarEdit from '../../pages/Profile/MyAvatarEdit';
 import paths from '../../config/paths';
 
 const ProfileRoutes = () => {
@@ -25,6 +26,11 @@ const ProfileRoutes = () => {
           exact
           path={paths.profiles.myprofile.edit}
           component={MyProfileEdit}
+        />
+        <Route
+          exact
+          path={paths.profiles.myprofile.avatar}
+          component={MyAvatarEdit}
         />
         <Redirect exact from='/profiles' to='/home' />
       </Switch>

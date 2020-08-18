@@ -1,6 +1,6 @@
 import {
   createFriendAPI,
-  // fetchFriendAPI,
+  fetchFollowFriendsAPI,
   // fetchFriendsAPI,
   // editFriendAPI,
   // deleteFriendAPI,
@@ -9,7 +9,7 @@ import {
 
 import {
   CREATE_FRIEND,
-  //   FETCH_FRIEND,
+  FETCH_FOLLOW_FRIENDS,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
   //   DELETE_FRIEND,
@@ -28,14 +28,14 @@ export const createFriend = (token, params) => async (dispatch) => {
   }
 };
 
-// export const fetchPost = (token, postId) => async (dispatch) => {
-//   try {
-//     const response = await fetchPostAPI(token, postId);
-//     dispatch({ type: FETCH_POST, payload: response.data });
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+export const fetchFollowFriend = (token) => async (dispatch) => {
+  try {
+    const response = await fetchFollowFriendsAPI(token);
+    dispatch({ type: FETCH_FOLLOW_FRIENDS, payload: response.data });
+  } catch (err) {
+    throw err;
+  }
+};
 
 // export const fetchPosts = (token) => async (dispatch) => {
 //   try {

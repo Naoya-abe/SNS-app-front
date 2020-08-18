@@ -52,7 +52,7 @@ const MyProfile = (props) => {
         </Link>
       </div>
       <Divider className='home-divider' />
-      <PostList posts={userPosts} />
+      <PostList userProfile={userProfile} posts={userPosts} />
     </div>
   );
 };

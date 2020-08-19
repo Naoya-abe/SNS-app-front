@@ -2,40 +2,32 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { Button } from '@material-ui/core';
-import {
-  createFriend,
-  fetchFollowFriend,
-  deleteFriend,
-} from '../../redux/actions/friends';
+import { createFriend, deleteFriend } from '../../redux/actions/friends';
 
 const RequestButton = (props) => {
-  const {
-    askFrom,
-    askTo,
-    cookies,
-    createFriend,
-    fetchFollowFriend,
-    deleteFriend,
-    follow,
-  } = props;
+  const { askTo, cookies, createFriend, deleteFriend, follow } = props;
   const token = cookies.get('current-token');
   const [followed, setfollowed] = useState(false);
 
+  useEffect(() => {
+    setfollowed(follow[askTo] ? true : false);
+  }, [follow, askTo]);
+
   const handleFollowRequest = () => {
-    console.log(`${askFrom}----->${askTo}`);
     try {
       const params = { askTo: askTo, approved: false };
       createFriend(token, params);
+      setfollowed(true);
     } catch (err) {
       console.log(err);
     }
   };
 
   const handleFollowDelete = () => {
-    console.log('followDelete');
     try {
       const approvalId = follow[askTo].id;
-      deleteFriend(token, approvalId);
+      deleteFriend(token, approvalId, askTo);
+      setfollowed(false);
     } catch (err) {
       console.log(err);
     }
@@ -43,7 +35,7 @@ const RequestButton = (props) => {
 
   return (
     <div className='friend-request-button'>
-      {follow[askTo] ? (
+      {followed ? (
         <Button variant='outlined' color='default' onClick={handleFollowDelete}>
           Followed
         </Button>
@@ -70,6 +62,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   createFriend,
-  fetchFollowFriend,
   deleteFriend,
 })(cookieRequestButton);

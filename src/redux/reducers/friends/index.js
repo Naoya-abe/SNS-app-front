@@ -9,8 +9,8 @@ import {
 
 export default (state = {}, action) => {
   switch (action.type) {
-    case CREATE_FRIEND:
-      return { ...state, [action.payload.askFrom]: action.payload };
+    // case CREATE_FRIEND:
+    //   return { ...state, [action.payload.askFrom]: action.payload };
     // case FETCH_POSTS:
     //   return {
     //     ..._.mapKeys(action.payload, 'id'),

@@ -56,10 +56,10 @@ export const fetchFollowFriend = (token) => async (dispatch) => {
 //   }
 // };
 
-export const deleteFriend = (token, approvalId) => async (dispatch) => {
+export const deleteFriend = (token, approvalId, askTo) => async (dispatch) => {
   try {
-    const response = await deleteFriendAPI(token, approvalId);
-    dispatch({ type: DELETE_FRIEND, payload: response.data });
+    await deleteFriendAPI(token, approvalId);
+    dispatch({ type: DELETE_FRIEND, payload: askTo });
   } catch (err) {
     throw err;
   }

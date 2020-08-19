@@ -21,3 +21,14 @@ export const fetchFollowFriendsAPI = async (token) => {
     throw err;
   }
 };
+
+export const deleteFriendAPI = async (token, approvalId) => {
+  try {
+    const response = await base.delete(`api/user/approval/${approvalId}`, {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

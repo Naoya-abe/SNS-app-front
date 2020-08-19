@@ -8,17 +8,15 @@ import PostRoutes from '../../children/PostRoutes';
 import ProfileRoutes from '../../children/ProfileRoutes';
 import DMRoutes from '../../children/DMRoutes';
 import { fetchUser } from '../../../redux/actions/users';
-import { fetchFollowFriend } from '../../../redux/actions/friends';
 
 import '../../../styles/routes/parents/AfterRoutes.scss';
 
 const AfterRoutes = (props) => {
-  const { token, fetchUser, fetchFollowFriend } = props;
+  const { token, fetchUser } = props;
   useEffect(() => {
     (async () => {
       try {
         await fetchUser(token);
-        await fetchFollowFriend(token);
       } catch (err) {
         console.log(err);
       }
@@ -40,4 +38,4 @@ const AfterRoutes = (props) => {
   );
 };
 
-export default connect(null, { fetchUser, fetchFollowFriend })(AfterRoutes);
+export default connect(null, { fetchUser })(AfterRoutes);

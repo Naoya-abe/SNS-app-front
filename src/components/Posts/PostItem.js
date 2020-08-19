@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import UserHeader from '../UserHeader';
 
 import '../../styles/components/Posts/PostItem.scss';
-import RequsetButton from '../Friends/RequsetButton';
+import RequestButton from '../Friends/RequestButton';
 
 const PostItem = (props) => {
   const { userId, postUserId, postId, displayName, avatar, content } = props;
@@ -16,7 +16,7 @@ const PostItem = (props) => {
         </div>
       </Link>
       {userId !== postUserId ? (
-        <RequsetButton askFrom={userId} askTo={postUserId} />
+        <RequestButton askFrom={userId} askTo={postUserId} />
       ) : null}
     </div>
   );

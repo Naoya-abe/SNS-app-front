@@ -4,7 +4,7 @@ import {
   //   FETCH_FRIEND,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
-  //   DELETE_FRIEND,
+  DELETE_FRIEND,
 } from '../../actions/friends/types';
 
 export default (state = {}, action) => {
@@ -17,9 +17,8 @@ export default (state = {}, action) => {
     //   return { ...state, [action.payload.id]: action.payload };
     // case EDIT_POST:
     //   return { ...state, [action.payload.id]: action.payload };
-    // case DELETE_POST:
-    //   console.log(action.payload);
-    //   return _.omit(state, action.payload);
+    case DELETE_FRIEND:
+      return _.omit(state, action.payload);
     default:
       return state;
   }

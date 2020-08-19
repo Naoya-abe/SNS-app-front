@@ -3,7 +3,7 @@ import {
   fetchFollowFriendsAPI,
   // fetchFriendsAPI,
   // editFriendAPI,
-  // deleteFriendAPI,
+  deleteFriendAPI,
   // fetchUserFriendsAPI,
 } from '../../../api/friends';
 
@@ -12,7 +12,7 @@ import {
   FETCH_FOLLOW_FRIENDS,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
-  //   DELETE_FRIEND,
+  DELETE_FRIEND,
   //   FETCH_USER_FRIENDS,
 } from './types';
 
@@ -56,15 +56,14 @@ export const fetchFollowFriend = (token) => async (dispatch) => {
 //   }
 // };
 
-// export const deletePost = (token, postId) => async (dispatch) => {
-//   try {
-//     const response = await deletePostAPI(token, postId);
-//     dispatch({ type: DELETE_POST, payload: response.data });
-//     history.push(paths.home.main);
-//   } catch (err) {
-//     throw err;
-//   }
-// };
+export const deleteFriend = (token, approvalId) => async (dispatch) => {
+  try {
+    const response = await deleteFriendAPI(token, approvalId);
+    dispatch({ type: DELETE_FRIEND, payload: response.data });
+  } catch (err) {
+    throw err;
+  }
+};
 
 // export const fetchUserPosts = (token) => async (dispatch) => {
 //   try {

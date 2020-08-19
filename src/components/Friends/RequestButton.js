@@ -1,12 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { Button } from '@material-ui/core';
-import { createFriend } from '../../redux/actions/friends';
+import {
+  createFriend,
+  fetchFollowFriend,
+  deleteFriend,
+} from '../../redux/actions/friends';
 
-const RequsetButton = (props) => {
-  const { askFrom, askTo, cookies, createFriend, follow } = props;
+const RequestButton = (props) => {
+  const {
+    askFrom,
+    askTo,
+    cookies,
+    createFriend,
+    fetchFollowFriend,
+    deleteFriend,
+    follow,
+  } = props;
   const token = cookies.get('current-token');
+  const [followed, setfollowed] = useState(false);
 
   const handleFollowRequest = () => {
     console.log(`${askFrom}----->${askTo}`);
@@ -20,12 +33,12 @@ const RequsetButton = (props) => {
 
   const handleFollowDelete = () => {
     console.log('followDelete');
-    // try {
-    //   const params = { askTo: askTo, approved: false };
-    //   createFriend(token, params);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const approvalId = follow[askTo].id;
+      deleteFriend(token, approvalId);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -47,7 +60,7 @@ const RequsetButton = (props) => {
   );
 };
 
-const cookieRequsetButton = withCookies(RequsetButton);
+const cookieRequestButton = withCookies(RequestButton);
 
 const mapStateToProps = (state) => {
   return {
@@ -55,4 +68,8 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { createFriend })(cookieRequsetButton);
+export default connect(mapStateToProps, {
+  createFriend,
+  fetchFollowFriend,
+  deleteFriend,
+})(cookieRequestButton);

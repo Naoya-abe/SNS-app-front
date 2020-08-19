@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import {
   CREATE_FOLLOW,
-  FETCH_FOLLOW_FRIENDS,
+  FETCH_FOLLOW,
   //   FETCH_FRIEND,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
@@ -12,7 +12,7 @@ export default (state = {}, action) => {
   switch (action.type) {
     case CREATE_FOLLOW:
       return { ...state, [action.payload.askTo]: action.payload };
-    case FETCH_FOLLOW_FRIENDS:
+    case FETCH_FOLLOW:
       return {
         ..._.mapKeys(action.payload, 'askTo'),
       };

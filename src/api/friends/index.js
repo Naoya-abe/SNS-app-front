@@ -11,7 +11,7 @@ export const createFollowAPI = async (token, params) => {
   }
 };
 
-export const fetchFollowFriendsAPI = async (token) => {
+export const fetchFollowAPI = async (token) => {
   try {
     const response = await base.get('api/user/follow-list/', {
       headers: { Authorization: `Token ${token}` },

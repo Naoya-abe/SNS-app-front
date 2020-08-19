@@ -3,25 +3,25 @@ import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { Divider } from '@material-ui/core';
 import { fetchPosts } from '../redux/actions/posts';
-import { fetchFollowFriend } from '../redux/actions/friends';
+import { fetchFollow } from '../redux/actions/friends';
 import PostCreate from '../components/Posts/PostCreate';
 import PostList from '../components/Posts/PostList';
 
 import '../styles/components/Home.scss';
 
 const Home = (props) => {
-  const { fetchPosts, userProfile, posts, fetchFollowFriend, follow } = props;
+  const { fetchPosts, userProfile, posts, fetchFollow } = props;
   const token = props.cookies.get('current-token');
   useEffect(() => {
     (async () => {
       try {
         await fetchPosts(token);
-        await fetchFollowFriend(token);
+        await fetchFollow(token);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [fetchFollowFriend, fetchPosts, token]);
+  }, [fetchFollow, fetchPosts, token]);
 
   return (
     <div className='home'>
@@ -44,6 +44,6 @@ const mapStateToProps = (state) => {
 
 const cookieHome = withCookies(Home);
 
-export default connect(mapStateToProps, { fetchPosts, fetchFollowFriend })(
+export default connect(mapStateToProps, { fetchPosts, fetchFollow })(
   cookieHome
 );

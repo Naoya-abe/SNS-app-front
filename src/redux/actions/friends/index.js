@@ -1,6 +1,6 @@
 import {
   createFollowAPI,
-  fetchFollowFriendsAPI,
+  fetchFollowAPI,
   // fetchFriendsAPI,
   // editFriendAPI,
   deleteFollowAPI,
@@ -9,7 +9,7 @@ import {
 
 import {
   CREATE_FOLLOW,
-  FETCH_FOLLOW_FRIENDS,
+  FETCH_FOLLOW,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
   DELETE_FOLLOW,
@@ -28,10 +28,10 @@ export const createFollow = (token, params) => async (dispatch) => {
   }
 };
 
-export const fetchFollowFriend = (token) => async (dispatch) => {
+export const fetchFollow = (token) => async (dispatch) => {
   try {
-    const response = await fetchFollowFriendsAPI(token);
-    dispatch({ type: FETCH_FOLLOW_FRIENDS, payload: response.data });
+    const response = await fetchFollowAPI(token);
+    dispatch({ type: FETCH_FOLLOW, payload: response.data });
   } catch (err) {
     throw err;
   }

@@ -1,28 +1,28 @@
 import {
-  createFriendAPI,
+  createFollowAPI,
   fetchFollowFriendsAPI,
   // fetchFriendsAPI,
   // editFriendAPI,
-  deleteFriendAPI,
+  deleteFollowAPI,
   // fetchUserFriendsAPI,
 } from '../../../api/friends';
 
 import {
-  CREATE_FRIEND,
+  CREATE_FOLLOW,
   FETCH_FOLLOW_FRIENDS,
   //   FETCH_FRIENDS,
   //   EDIT_FRIEND,
-  DELETE_FRIEND,
+  DELETE_FOLLOW,
   //   FETCH_USER_FRIENDS,
 } from './types';
 
 import history from '../../../history';
 import paths from '../../../config/paths';
 
-export const createFriend = (token, params) => async (dispatch) => {
+export const createFollow = (token, params) => async (dispatch) => {
   try {
-    const response = await createFriendAPI(token, params);
-    dispatch({ type: CREATE_FRIEND, payload: response.data });
+    const response = await createFollowAPI(token, params);
+    dispatch({ type: CREATE_FOLLOW, payload: response.data });
   } catch (err) {
     throw err;
   }
@@ -56,10 +56,10 @@ export const fetchFollowFriend = (token) => async (dispatch) => {
 //   }
 // };
 
-export const deleteFriend = (token, approvalId, askTo) => async (dispatch) => {
+export const deleteFollow = (token, approvalId, askTo) => async (dispatch) => {
   try {
-    await deleteFriendAPI(token, approvalId);
-    dispatch({ type: DELETE_FRIEND, payload: askTo });
+    await deleteFollowAPI(token, approvalId);
+    dispatch({ type: DELETE_FOLLOW, payload: askTo });
   } catch (err) {
     throw err;
   }

@@ -1,6 +1,6 @@
 import base from '../base';
 
-export const createFriendAPI = async (token, params) => {
+export const createFollowAPI = async (token, params) => {
   try {
     const response = await base.post('api/user/approval/', params, {
       headers: { Authorization: `Token ${token}` },
@@ -22,7 +22,7 @@ export const fetchFollowFriendsAPI = async (token) => {
   }
 };
 
-export const deleteFriendAPI = async (token, approvalId) => {
+export const deleteFollowAPI = async (token, approvalId) => {
   try {
     const response = await base.delete(`api/user/approval/${approvalId}`, {
       headers: { Authorization: `Token ${token}` },

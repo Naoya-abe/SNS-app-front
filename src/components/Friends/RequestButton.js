@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { Button } from '@material-ui/core';
-import { createFriend, deleteFriend } from '../../redux/actions/friends';
+import { createFollow, deleteFollow } from '../../redux/actions/friends';
 
 const RequestButton = (props) => {
-  const { askTo, cookies, createFriend, deleteFriend, follow } = props;
+  const { askTo, cookies, createFollow, deleteFollow, follow } = props;
   const token = cookies.get('current-token');
   const [followed, setfollowed] = useState(false);
 
@@ -16,7 +16,7 @@ const RequestButton = (props) => {
   const handleFollowRequest = () => {
     try {
       const params = { askTo: askTo, approved: false };
-      createFriend(token, params);
+      createFollow(token, params);
       setfollowed(true);
     } catch (err) {
       console.log(err);
@@ -26,7 +26,7 @@ const RequestButton = (props) => {
   const handleFollowDelete = () => {
     try {
       const approvalId = follow[askTo].id;
-      deleteFriend(token, approvalId, askTo);
+      deleteFollow(token, approvalId, askTo);
       setfollowed(false);
     } catch (err) {
       console.log(err);
@@ -61,6 +61,6 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps, {
-  createFriend,
-  deleteFriend,
+  createFollow,
+  deleteFollow,
 })(cookieRequestButton);

@@ -4,7 +4,6 @@ import {
   FETCH_FOLLOW,
   //   FETCH_FRIEND,
   //   FETCH_FRIENDS,
-  //   EDIT_FRIEND,
   DELETE_FOLLOW,
 } from '../../actions/friends/types';
 
@@ -18,8 +17,7 @@ export default (state = {}, action) => {
       };
     // case FETCH_POST:
     //   return { ...state, [action.payload.id]: action.payload };
-    // case EDIT_POST:
-    //   return { ...state, [action.payload.id]: action.payload };
+
     case DELETE_FOLLOW:
       return _.omit(state, action.payload);
     default:

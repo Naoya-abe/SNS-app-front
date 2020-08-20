@@ -1,6 +1,7 @@
 export const CREATE_FOLLOW = 'CREATE_FOLLOW';
 export const FETCH_FOLLOW = 'FETCH_FOLLOW';
 export const FETCH_FOLLOWER = 'FETCH_FOLLOWER';
+export const EDIT_FOLLOWER = 'EDIT_FOLLOWER';
 
 export const FETCH_FRIENDS = 'FETCH_FRIENDS';
 export const EDIT_FRIEND = 'EDIT_FRIEND';

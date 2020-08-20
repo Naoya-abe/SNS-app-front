@@ -16,11 +16,16 @@ const RequestList = (props) => {
           const askFrom = datum.askFrom;
           return (
             <React.Fragment key={datum.id}>
-              <RequestItem
-                displayName={users[askFrom].displayName}
-                avatar={users[askFrom].avatar}
-              />
-              <Divider />
+              {!datum.approved ? (
+                <React.Fragment>
+                  <RequestItem
+                    displayName={users[askFrom].displayName}
+                    avatar={users[askFrom].avatar}
+                    requestId={datum.id}
+                  />
+                  <Divider />
+                </React.Fragment>
+              ) : null}
             </React.Fragment>
           );
         })}

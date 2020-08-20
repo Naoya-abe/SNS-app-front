@@ -5,11 +5,11 @@ import AcceptButton from './AcceptButton';
 import '../../styles/components/Friends/RequestItem.scss';
 
 const RequestItem = (props) => {
-  const { displayName, avatar } = props;
+  const { displayName, avatar, requestId } = props;
   return (
     <div className='request-item'>
       <UserHeader avatar={avatar} displayName={displayName} />
-      <AcceptButton />
+      <AcceptButton requestId={requestId} />
     </div>
   );
 };

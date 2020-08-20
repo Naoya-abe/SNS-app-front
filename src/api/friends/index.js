@@ -22,6 +22,21 @@ export const fetchFollowAPI = async (token) => {
   }
 };
 
+export const editFollowerAPI = async (token, requestId, params) => {
+  try {
+    const response = await base.patch(
+      `api/user/approval/${requestId}/`,
+      params,
+      {
+        headers: { Authorization: `Token ${token}` },
+      }
+    );
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const fetchFollowerAPI = async (token) => {
   try {
     const response = await base.get('api/user/follower-list/', {

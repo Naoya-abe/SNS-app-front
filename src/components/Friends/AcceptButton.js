@@ -2,65 +2,62 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { Button } from '@material-ui/core';
-import { createFollow, deleteFollow } from '../../redux/actions/friends';
+import { createFollow, editFollower } from '../../redux/actions/friends';
 
 const AcceptButton = (props) => {
-  const { askTo, cookies, createFollow, deleteFollow, follow } = props;
+  // const { askTo, cookies, createFollow, editFollower, follow } = props;
+  const { requestId, cookies, createFollow, editFollower } = props;
   const token = cookies.get('current-token');
-  const [followed, setfollowed] = useState(false);
+  // const [followed, setfollowed] = useState(false);
 
-  useEffect(() => {
-    setfollowed(follow[askTo] ? true : false);
-  }, [follow, askTo]);
+  // useEffect(() => {
+  //   setfollowed(follow[askTo] ? true : false);
+  // }, [follow, askTo]);
 
-  const handleFollowRequest = () => {
+  const handleAccept = () => {
     try {
-      const params = { askTo: askTo, approved: false };
-      createFollow(token, params);
-      setfollowed(true);
+      console.log('accept');
+      const params = { approved: true };
+      editFollower(token, requestId, params);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const handleFollowDelete = () => {
-    try {
-      const approvalId = follow[askTo].id;
-      deleteFollow(token, approvalId, askTo);
-      setfollowed(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const handleFollowDelete = () => {
+  //   try {
+  //     const approvalId = follow[askTo].id;
+  //     deleteFollow(token, approvalId, askTo);
+  //     setfollowed(false);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   return (
     <div className='friend-accept-button'>
-      {followed ? (
+      {/* {followed ? (
         <Button variant='outlined' color='default' onClick={handleFollowDelete}>
           Followed
         </Button>
-      ) : (
-        <Button
-          variant='outlined'
-          color='primary'
-          onClick={handleFollowRequest}
-        >
-          Follow
-        </Button>
-      )}
+      ) : ( */}
+      <Button variant='outlined' color='primary' onClick={handleAccept}>
+        Follow
+      </Button>
+      {/* )} */}
     </div>
   );
 };
 
 const cookieAcceptButton = withCookies(AcceptButton);
 
-const mapStateToProps = (state) => {
-  return {
-    follow: state.follow,
-  };
-};
+// const mapStateToProps = (state) => {
+//   return {
+//     follow: state.follow,
+//   };
+// };
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   createFollow,
-  deleteFollow,
+  editFollower,
 })(cookieAcceptButton);

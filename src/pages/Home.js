@@ -4,17 +4,26 @@ import { withCookies } from 'react-cookie';
 import { Divider } from '@material-ui/core';
 import { fetchPosts } from '../redux/actions/posts';
 import { fetchFollow, fetchFollower } from '../redux/actions/friends';
+import { fetchUsers } from '../redux/actions/users/others';
 import PostCreate from '../components/Posts/PostCreate';
 import PostList from '../components/Posts/PostList';
 
 import '../styles/components/Home.scss';
 
 const Home = (props) => {
-  const { fetchPosts, userProfile, posts, fetchFollow, fetchFollower } = props;
+  const {
+    fetchPosts,
+    userProfile,
+    posts,
+    fetchFollow,
+    fetchFollower,
+    fetchUsers,
+  } = props;
   const token = props.cookies.get('current-token');
   useEffect(() => {
     (async () => {
       try {
+        await fetchUsers();
         await fetchPosts(token);
         await fetchFollow(token);
         await fetchFollower(token);
@@ -22,7 +31,7 @@ const Home = (props) => {
         console.log(err);
       }
     })();
-  }, [fetchFollow, fetchFollower, fetchPosts, token]);
+  }, [fetchUsers, fetchFollow, fetchFollower, fetchPosts, token]);
 
   return (
     <div className='home'>
@@ -39,13 +48,13 @@ const mapStateToProps = (state) => {
   return {
     userProfile: state.user,
     posts: Object.values(state.posts),
-    follow: state.follow,
   };
 };
 
 const cookieHome = withCookies(Home);
 
 export default connect(mapStateToProps, {
+  fetchUsers,
   fetchPosts,
   fetchFollow,
   fetchFollower,

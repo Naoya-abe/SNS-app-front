@@ -39,6 +39,16 @@ export const fetchUserAPI = async (token) => {
   }
 };
 
+//  サービスを利用しているユーザ情報の取得
+export const fetchUsersAPI = async () => {
+  try {
+    const response = await base.get('api/user/profiles/');
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const patchUserAPI = async (token, userId, params) => {
   try {
     const response = await base.patch(`api/user/profiles/${userId}/`, params, {

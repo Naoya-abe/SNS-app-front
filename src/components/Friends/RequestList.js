@@ -22,6 +22,7 @@ const RequestList = (props) => {
                     displayName={users[askFrom].displayName}
                     avatar={users[askFrom].avatar}
                     requestId={datum.id}
+                    askFrom={askFrom}
                   />
                   <Divider />
                 </React.Fragment>

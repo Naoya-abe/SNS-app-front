@@ -6,7 +6,7 @@ import { createFollow, editFollower } from '../../redux/actions/friends';
 
 const AcceptButton = (props) => {
   // const { askTo, cookies, createFollow, editFollower, follow } = props;
-  const { requestId, cookies, createFollow, editFollower } = props;
+  const { requestId, askFrom, cookies, createFollow, editFollower } = props;
   const token = cookies.get('current-token');
   // const [followed, setfollowed] = useState(false);
 
@@ -19,6 +19,8 @@ const AcceptButton = (props) => {
       console.log('accept');
       const params = { approved: true };
       editFollower(token, requestId, params);
+      const createParams = { askTo: askFrom, approved: true };
+      createFollow(token, createParams);
     } catch (err) {
       console.log(err);
     }

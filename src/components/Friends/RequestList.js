@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Divider } from '@material-ui/core';
-import sampleData from './sampleData.json';
 import RequestItem from './RequestItem';
 
 import '../../styles/components/Friends/RequestList.scss';

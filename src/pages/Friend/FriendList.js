@@ -21,7 +21,7 @@ const FriendList = (props) => {
               <Link to={`/friends/${friendId}`}>
                 <FirendItem profile={friendProfile} />
               </Link>
-              <Divider />
+              <Divider className='friend-list-divider' />
             </React.Fragment>
           );
         })}

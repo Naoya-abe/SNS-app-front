@@ -1,8 +1,12 @@
 .friend-list {
     width: 50%;
     .scroll-list {
+        .friend-list-divider {
+
+        }
         .friend-item {
             .friend-header {
+                margin-bottom: 25px;
                 .user-header {
                     .MuiAvatar-root {
                         width: 60px;
@@ -14,7 +18,7 @@
                 }
                 .about-user {
                     margin-top: -30px;
-                    padding-left: 72px;
+                    padding-left: 76px;
                     font-size: large;
                 }
             }

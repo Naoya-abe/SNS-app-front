@@ -4,11 +4,12 @@ import { withCookies } from 'react-cookie';
 import { Divider } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import UserHeader from '../../components/UserHeader';
-import '../../styles/pages/Friend/FriendDetail.scss';
 import { fetchFriendPosts } from '../../redux/actions/posts';
+import PostList from '../../components/Posts/PostList';
+import '../../styles/pages/Friend/FriendDetail.scss';
 
 const FriendDetail = (props) => {
-  const { userProfile, cookies, match, fetchFriendPosts } = props;
+  const { userProfile, cookies, match, fetchFriendPosts, friendPosts } = props;
   const friendId = match.params.id;
   const token = cookies.get('current-token');
   useEffect(() => {
@@ -19,7 +20,7 @@ const FriendDetail = (props) => {
         console.log(err);
       }
     })();
-  });
+  }, [fetchFriendPosts, friendId, token]);
   return userProfile ? (
     <div className='friend-detail'>
       <h3>Friend Detail</h3>
@@ -32,6 +33,8 @@ const FriendDetail = (props) => {
           detail
         />
       </div>
+      <Divider className='home-divider' />
+      <PostList userProfile={userProfile} posts={friendPosts} />
     </div>
   ) : null;
 };
@@ -40,7 +43,10 @@ const cookieFriendDetail = withCookies(FriendDetail);
 
 const mapStateToProps = (state, ownProps) => {
   const userId = ownProps.match.params.id;
-  return { userProfile: state.users[userId] };
+  return {
+    userProfile: state.users[userId],
+    friendPosts: Object.values(state.friendPosts),
+  };
 };
 
 export default connect(mapStateToProps, { fetchFriendPosts })(

@@ -60,10 +60,6 @@ const MyProfileEdit = (props) => {
                   multiline
                   defaultValue={userProfile.about}
                   inputRef={register({
-                    required: {
-                      value: true,
-                      message: 'Please enter self introduction',
-                    },
                     maxLength: {
                       value: 140,
                       message: 'Please enter within 140 letters',

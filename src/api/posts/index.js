@@ -65,3 +65,15 @@ export const fetchUserPostsAPI = async (token) => {
     throw err;
   }
 };
+
+export const fetchFriendPostsAPI = async (token, friendId) => {
+  try {
+    const response = await base.get('api/post/friend-posts/', {
+      params: { friendId },
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

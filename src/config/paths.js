@@ -27,7 +27,8 @@ const paths = {
     detail: '/dm/detail/:id',
   },
   friends: {
-    main: '/friends',
+    list: '/friends',
+    detail: '/friends/:id',
   },
 };
 

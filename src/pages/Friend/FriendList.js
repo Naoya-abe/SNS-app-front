@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Divider } from '@material-ui/core';
 import FirendItem from '../../components/Friends/FirendItem';
-
 import '../../styles/pages/Friend/FriendList.scss';
 
 const FriendList = (props) => {
@@ -18,7 +18,9 @@ const FriendList = (props) => {
           const friendProfile = users[friendId];
           return (
             <React.Fragment key={friendProfile.id}>
-              <FirendItem profile={friendProfile} />
+              <Link to={`/friends/${friendId}`}>
+                <FirendItem profile={friendProfile} />
+              </Link>
               <Divider />
             </React.Fragment>
           );

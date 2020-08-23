@@ -5,6 +5,7 @@ import {
   editPostAPI,
   deletePostAPI,
   fetchUserPostsAPI,
+  fetchFriendPostsAPI,
 } from '../../../api/posts';
 
 import {
@@ -14,6 +15,7 @@ import {
   EDIT_POST,
   DELETE_POST,
   FETCH_USER_POSTS,
+  FETCH_FRIEND_POSTS,
 } from './types';
 
 import history from '../../../history';
@@ -41,6 +43,15 @@ export const fetchPosts = (token) => async (dispatch) => {
   try {
     const response = await fetchPostsAPI(token);
     dispatch({ type: FETCH_POSTS, payload: response.data });
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const fetchFriendPosts = (token, friendId) => async (dispatch) => {
+  try {
+    const response = await fetchFriendPostsAPI(token, friendId);
+    dispatch({ type: FETCH_FRIEND_POSTS, payload: response.data });
   } catch (err) {
     throw err;
   }

@@ -5,3 +5,5 @@ export const EDIT_POST = 'EDIT_POST';
 export const DELETE_POST = 'DELETE_POST';
 
 export const FETCH_USER_POSTS = 'FETCH_USER_POSTS';
+
+export const FETCH_FRIEND_POSTS = 'FETCH_FRIEND_POSTS';

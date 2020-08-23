@@ -58,3 +58,14 @@ export const deleteFollowAPI = async (token, approvalId) => {
     throw err;
   }
 };
+
+export const fetchFriendsAPI = async (token) => {
+  try {
+    const response = await base.get('api/user/friends-list/', {
+      headers: { Authorization: `Token ${token}` },
+    });
+    return response;
+  } catch (err) {
+    throw err;
+  }
+};

@@ -6,15 +6,31 @@ import '../../styles/components/Posts/PostItem.scss';
 import RequestButton from '../Friends/RequestButton';
 
 const PostItem = (props) => {
-  const { userId, postUserId, postId, displayName, avatar, content } = props;
+  const {
+    userId,
+    postUserId,
+    postId,
+    displayName,
+    avatar,
+    content,
+    detail,
+  } = props;
   return (
     <div className='post-item'>
-      <Link to={`/posts/detail/${postId}`}>
+      {!detail ? (
+        <Link to={`/posts/detail/${postId}`}>
+          <div className='post-container'>
+            <UserHeader avatar={avatar} displayName={displayName} />
+            <div className='post-content'>{content}</div>
+          </div>
+        </Link>
+      ) : (
         <div className='post-container'>
           <UserHeader avatar={avatar} displayName={displayName} />
           <div className='post-content'>{content}</div>
         </div>
-      </Link>
+      )}
+
       {userId !== postUserId ? (
         <RequestButton askFrom={userId} askTo={postUserId} />
       ) : null}

@@ -17,9 +17,9 @@ const MyProfile = (props) => {
   const token = cookies.get('current-token');
 
   useEffect(() => {
-    ((async) => {
+    (async () => {
       try {
-        fetchUserPosts(token);
+        await fetchUserPosts(token);
       } catch (err) {
         console.log(err);
       }

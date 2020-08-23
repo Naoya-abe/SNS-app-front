@@ -26,6 +26,9 @@ const paths = {
     create: '/dm/create',
     detail: '/dm/detail/:id',
   },
+  friends: {
+    main: '/friends',
+  },
 };
 
 export default paths;

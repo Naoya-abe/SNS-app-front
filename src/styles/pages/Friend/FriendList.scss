@@ -1,0 +1,23 @@
+.friend-list {
+    width: 50%;
+    .scroll-list {
+        .friend-item {
+            .friend-header {
+                .user-header {
+                    .MuiAvatar-root {
+                        width: 60px;
+                        height: 60px;
+                    }
+                    .display-name {
+                        font-size: x-large;
+                    }
+                }
+                .about-user {
+                    margin-top: -30px;
+                    padding-left: 72px;
+                    font-size: large;
+                }
+            }
+        }
+    }
+}

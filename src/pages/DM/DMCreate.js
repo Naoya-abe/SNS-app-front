@@ -34,7 +34,7 @@ const DMCreate = (props) => {
   const classes = useStyles();
   const [age, setAge] = useState('');
   useEffect(() => {
-    ((async) => {
+    (async () => {
       //   自分の申請が許可されたユーザ一覧を取得
       //   その後にDM送り先の選択肢に入れる
     })();

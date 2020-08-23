@@ -34,6 +34,7 @@ const PostDetail = (props) => {
             avatar={post.postFrom.avatar}
             displayName={post.postFrom.displayName}
             content={post.content}
+            detail
           />
           {userProfile && userProfile.id === post.postFrom.id ? (
             <div className='button-container'>

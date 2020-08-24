@@ -8,6 +8,7 @@ import friendPostReducer from './posts/friendPosts';
 import followReducer from './friends/follow';
 import followerReducer from './friends/follower';
 import friendReducer from './friends';
+import DMReducer from './DM';
 
 export default combineReducers({
   user: userReducer,
@@ -18,4 +19,5 @@ export default combineReducers({
   follow: followReducer,
   follower: followerReducer,
   friends: friendReducer,
+  inbox: DMReducer,
 });

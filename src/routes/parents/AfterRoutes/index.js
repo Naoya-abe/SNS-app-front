@@ -11,22 +11,24 @@ import FriendRoutes from '../../children/FriendRoutes';
 import { fetchUser } from '../../../redux/actions/users';
 import { fetchUsers } from '../../../redux/actions/users/others';
 import { fetchFriends } from '../../../redux/actions/friends';
+import { fetchDMs } from '../../../redux/actions/DM';
 
 import '../../../styles/routes/parents/AfterRoutes.scss';
 
 const AfterRoutes = (props) => {
-  const { token, fetchUser, fetchUsers, fetchFriends } = props;
+  const { token, fetchUser, fetchUsers, fetchFriends, fetchDMs } = props;
   useEffect(() => {
     (async () => {
       try {
         await fetchUser(token);
         await fetchUsers();
         await fetchFriends(token);
+        await fetchDMs(token);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [fetchFriends, fetchUser, fetchUsers, token]);
+  }, [fetchDMs, fetchFriends, fetchUser, fetchUsers, token]);
 
   return (
     <div className='after-routes'>
@@ -44,6 +46,6 @@ const AfterRoutes = (props) => {
   );
 };
 
-export default connect(null, { fetchUser, fetchUsers, fetchFriends })(
+export default connect(null, { fetchUser, fetchUsers, fetchFriends, fetchDMs })(
   AfterRoutes
 );

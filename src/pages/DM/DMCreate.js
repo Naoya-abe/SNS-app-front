@@ -9,12 +9,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import { makeStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { patchUser } from '../../redux/actions/users';
+import { createDM } from '../../redux/actions/DM';
+import { fetchFriends } from '../../redux/actions/friends';
 import paths from '../../config/paths';
-import UserHeaderForm from '../../components/UserHeaderForm';
 import history from '../../history';
 
-import '../../styles/pages/Profile/MyProfileEdit.scss';
+import '../../styles/pages/DM/DMCreate.scss';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -27,74 +27,94 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DMCreate = (props) => {
-  const { cookies, patchUser, userProfile } = props;
+  const {
+    cookies,
+    patchUser,
+    userProfile,
+    fetchFriends,
+    friends,
+    createDM,
+    users,
+  } = props;
   const token = cookies.get('current-token');
   const userId = userProfile.id;
   const { register, handleSubmit } = useForm();
   const classes = useStyles();
-  const [age, setAge] = useState('');
+  const [destId, setDestId] = useState('');
   useEffect(() => {
     (async () => {
-      //   自分の申請が許可されたユーザ一覧を取得
-      //   その後にDM送り先の選択肢に入れる
+      fetchFriends(token);
     })();
-  });
+  }, [fetchFriends, token]);
   const handleChange = (event) => {
-    setAge(event.target.value);
+    console.log(event.target.value);
+    setDestId(event.target.value);
   };
   const handleCreate = (data) => {
     try {
-      patchUser(token, userId, data);
-      history.push(paths.profiles.myprofile.main);
+      const params = { receiver: destId, message: data.message };
+      createDM(token, params);
+      // history.push(paths.profiles.myprofile.main);
     } catch (err) {
       console.log(err);
     }
   };
-  const handleCancel = () => {
-    history.goBack();
-  };
+  // const handleCancel = (e) => {
+  //   e.target.reset();
+  // };
+
   return (
     <div className='dm-create'>
       <h3>Create Direct Messages</h3>
       <Divider />
-      <form onSubmit={handleSubmit(handleCreate)}>
-        <FormControl className={classes.formControl}>
-          <InputLabel id='demo-simple-select-label'>Age</InputLabel>
-          <Select
-            labelId='demo-simple-select-label'
-            id='demo-simple-select'
-            value={age}
-            onChange={handleChange}
-          >
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
-          </Select>
-        </FormControl>
-        <TextField
-          name='displayName'
-          label='User Name'
-          defaultValue={userProfile.displayName}
-          inputRef={register({
-            required: {
-              value: true,
-              message: 'Please enter user name',
-            },
-            maxLength: {
-              value: 20,
-              message: 'Please enter within 20 letters',
-            },
-          })}
-          className='user-name-field'
-        />
 
+      <form onSubmit={handleSubmit(handleCreate)}>
+        <div className='form-container'>
+          <FormControl className={classes.formControl}>
+            <InputLabel id='demo-simple-select-label'>Destination</InputLabel>
+            <Select
+              labelId='demo-simple-select-label'
+              id='demo-simple-select'
+              value={destId}
+              onChange={handleChange}
+            >
+              {friends.map((friend) => {
+                const friendId = friend.askTo;
+                const friendProfile = users[friendId];
+                return (
+                  friendProfile && (
+                    <MenuItem value={friendProfile.id} key={friendProfile.id}>
+                      {friendProfile.displayName}
+                    </MenuItem>
+                  )
+                );
+              })}
+            </Select>
+          </FormControl>
+          <TextField
+            name='message'
+            label='Message'
+            multiline
+            inputRef={register({
+              required: {
+                value: true,
+                message: 'Please enter message',
+              },
+              maxLength: {
+                value: 20,
+                message: 'Please enter within 140 letters',
+              },
+            })}
+            className='user-name-field'
+          />
+        </div>
         <div className='button-container'>
           <Button variant='outlined' color='primary' type='submit'>
-            Edit
+            Send
           </Button>
-          <Button variant='outlined' color='default' onClick={handleCancel}>
-            Cancel
-          </Button>
+          {/* <Button variant='outlined' color='default' onClick={handleCancel}>
+            Delete
+          </Button> */}
         </div>
       </form>
     </div>
@@ -106,7 +126,11 @@ const cookieDMCreate = withCookies(DMCreate);
 const mapStateToProps = (state) => {
   return {
     userProfile: state.user,
+    users: state.users,
+    friends: Object.values(state.friends),
   };
 };
 
-export default connect(mapStateToProps)(cookieDMCreate);
+export default connect(mapStateToProps, { fetchFriends, createDM })(
+  cookieDMCreate
+);

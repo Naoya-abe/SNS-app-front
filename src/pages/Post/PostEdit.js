@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withCookies } from 'react-cookie';
 import { useForm } from 'react-hook-form';
-import Button from '@material-ui/core/Button';
+import { Button, TextField } from '@material-ui/core';
 import { Divider } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { fetchPost, editPost } from '../../redux/actions/posts';
@@ -42,9 +42,11 @@ const PostEdit = (props) => {
             <ImageAvatar alt='User avatar' src={userProfile.avatar} />
           )}
           <div className='edit-post-content'>
-            <textarea
+            <TextField
+              className='textarea'
               name='content'
-              ref={register({
+              label='content'
+              inputRef={register({
                 required: {
                   value: true,
                   message: 'Please enter post contents.',
@@ -54,7 +56,8 @@ const PostEdit = (props) => {
                   message: 'Please enter within 140 letters',
                 },
               })}
-              placeholder={post.content}
+              defaultValue={post.content}
+              multiline
             />
             <div className='button-container'>
               <Button variant='outlined' color='primary' type='submit'>

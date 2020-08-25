@@ -1,9 +1,9 @@
-.edit-post{
+.edit-post {
     width: 50%;
 
-    .edit-post-form{
+    .edit-post-form {
         display: flex;
-        .edit-post-content{
+        .edit-post-content {
             width: 100%;
             textarea {
                 margin-top: 8px;
@@ -11,7 +11,11 @@
                 width: 100%;
                 height: 100px;
             }
-            .button-container{
+            .textarea {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            .button-container {
                 display: flex;
                 align-items: flex-end;
                 button {

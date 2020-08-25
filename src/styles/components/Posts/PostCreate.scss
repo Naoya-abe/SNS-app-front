@@ -6,10 +6,9 @@
     width: 100%;
     display: flex;
     justify-content: space-between;
-    textarea {
-      margin-top: 8px;
-      height: 90%;
+    .textarea {
       width: 90%;
+      padding-right: 10px;
     }
     .button-container {
       display: flex;
@@ -17,6 +16,7 @@
       button {
         margin-bottom: 5px;
         height: 36px;
+        width: 88.45px;
       }
     }
   }

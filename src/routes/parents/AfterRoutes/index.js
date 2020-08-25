@@ -10,13 +10,25 @@ import DMRoutes from '../../children/DMRoutes';
 import FriendRoutes from '../../children/FriendRoutes';
 import { fetchUser } from '../../../redux/actions/users';
 import { fetchUsers } from '../../../redux/actions/users/others';
-import { fetchFriends } from '../../../redux/actions/friends';
+import {
+  fetchFriends,
+  fetchFollow,
+  fetchFollower,
+} from '../../../redux/actions/friends';
 import { fetchDMs } from '../../../redux/actions/DM';
 
 import '../../../styles/routes/parents/AfterRoutes.scss';
 
 const AfterRoutes = (props) => {
-  const { token, fetchUser, fetchUsers, fetchFriends, fetchDMs } = props;
+  const {
+    token,
+    fetchUser,
+    fetchUsers,
+    fetchFriends,
+    fetchDMs,
+    fetchFollow,
+    fetchFollower,
+  } = props;
   useEffect(() => {
     (async () => {
       try {
@@ -24,11 +36,21 @@ const AfterRoutes = (props) => {
         await fetchUsers();
         await fetchFriends(token);
         await fetchDMs(token);
+        await fetchFollow(token);
+        await fetchFollower(token);
       } catch (err) {
         console.log(err);
       }
     })();
-  }, [fetchDMs, fetchFriends, fetchUser, fetchUsers, token]);
+  }, [
+    fetchDMs,
+    fetchFollow,
+    fetchFollower,
+    fetchFriends,
+    fetchUser,
+    fetchUsers,
+    token,
+  ]);
 
   return (
     <div className='after-routes'>
@@ -46,6 +68,11 @@ const AfterRoutes = (props) => {
   );
 };
 
-export default connect(null, { fetchUser, fetchUsers, fetchFriends, fetchDMs })(
-  AfterRoutes
-);
+export default connect(null, {
+  fetchUser,
+  fetchUsers,
+  fetchFriends,
+  fetchDMs,
+  fetchFollow,
+  fetchFollower,
+})(AfterRoutes);

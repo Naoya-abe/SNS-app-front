@@ -67,7 +67,6 @@ const DMCreate = (props) => {
     <div className='dm-create'>
       <h3>Create Direct Messages</h3>
       <Divider />
-
       <form onSubmit={handleSubmit(handleCreate)}>
         <div className='form-container'>
           <FormControl className={classes.formControl}>
@@ -101,11 +100,11 @@ const DMCreate = (props) => {
                 message: 'Please enter message',
               },
               maxLength: {
-                value: 20,
+                value: 140,
                 message: 'Please enter within 140 letters',
               },
             })}
-            className='user-name-field'
+            className='message-field'
           />
         </div>
         <div className='button-container'>

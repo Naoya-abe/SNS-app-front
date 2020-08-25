@@ -1,6 +1,14 @@
 .request-list {
     height: 38vh;
     width: 100%;
+
+    .title-container {
+        display: flex;
+        align-items: center;
+        h3 {
+            margin-right: 10px;
+        }
+    }
 }
 .scroll-list {
     width:100%;

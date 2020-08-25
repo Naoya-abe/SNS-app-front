@@ -9,6 +9,7 @@ export const createDM = (token, params) => async (dispatch) => {
   try {
     const response = await createDMAPI(token, params);
     dispatch({ type: CREATE_DM, payload: response.data });
+    history.push(paths.home.main);
   } catch (err) {
     throw err;
   }

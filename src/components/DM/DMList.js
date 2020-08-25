@@ -1,22 +1,24 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Divider } from '@material-ui/core';
-import sampleData from './sampleData.json';
 import DMItem from './DMItem';
 
 import '../../styles/components/DM/DMList.scss';
 
-const DMList = () => {
+const DMList = (props) => {
+  const { inbox, users } = props;
   return (
     <div className='dm-list'>
       <h3>DM</h3>
       <div className='scroll-list'>
-        {sampleData.map((datum) => {
+        {inbox.map((dm) => {
+          const userProfile = users[dm.sender];
           return (
-            <React.Fragment key={datum.avatar}>
+            <React.Fragment key={dm.id}>
               <DMItem
-                displayName={datum.displayName}
-                avatar={datum.avatar}
-                message={datum.message}
+                displayName={userProfile.displayName}
+                avatar={userProfile.avatar}
+                message={dm.message}
               />
               <Divider />
             </React.Fragment>
@@ -27,4 +29,13 @@ const DMList = () => {
   );
 };
 
-export default DMList;
+const mapStateToProps = (state) => {
+  const inbox = Object.values(state.inbox);
+  const reverseInbox = inbox.reverse();
+  return {
+    inbox: reverseInbox,
+    users: state.users,
+  };
+};
+
+export default connect(mapStateToProps, null)(DMList);

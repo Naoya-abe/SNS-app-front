@@ -6,6 +6,8 @@ export const createUserAPI = async (data) => {
       email: data.email,
       password: data.password,
       displayName: data.displayName,
+      avatar: null,
+      about: '',
     };
     const response = await base.post('api/user/profiles/', params);
     return response;

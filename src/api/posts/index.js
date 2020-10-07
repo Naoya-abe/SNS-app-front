@@ -13,7 +13,7 @@ export const createPostAPI = async (token, params) => {
 
 export const fetchPostAPI = async (token, postId) => {
   try {
-    const response = await base.get(`api/post/${postId}`, {
+    const response = await base.get(`api/post/${postId}/`, {
       headers: { Authorization: `Token ${token}` },
     });
     return response;

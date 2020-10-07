@@ -11,6 +11,7 @@ export const createDMAPI = async (token, params) => {
   }
 };
 
+// 使ってない
 export const fetchDMAPI = async (token) => {
   try {
     const response = await base.get('api/user/follow-list/', {
